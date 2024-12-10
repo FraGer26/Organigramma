@@ -1,5 +1,5 @@
 // Percorso file: src/Main.java
-import model.UnitaOrganizzativa;
+import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
 
 import javax.swing.*;
