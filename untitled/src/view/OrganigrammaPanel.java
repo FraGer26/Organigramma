@@ -1,8 +1,10 @@
 // Percorso file: src/view/OrganigrammaPanel.java
 package view;
 
+import Observer.SelectObserver;
 import composite.ComponenteOrganizzativo;
 import composite.Dipendente;
+import composite.GraphicUnit;
 import composite.UnitaOrganizzativa;
 import model.Role;
 
@@ -18,7 +20,8 @@ import java.util.Map;
 public class OrganigrammaPanel extends JPanel {
     private UnitaOrganizzativa root;
     private Map<UnitaOrganizzativa, Rectangle> posizioni; // Per tracciare le posizioni dei nodi
-
+    private GraphicUnit selected;
+    public SelectObserver menu = new CompositeJPopupMenu();
     public OrganigrammaPanel(UnitaOrganizzativa root) {
         this.root = root;
         this.posizioni = new HashMap<>();
@@ -35,7 +38,11 @@ public class OrganigrammaPanel extends JPanel {
                 }
             }
         });
+
+
     }
+
+
 
     private void mostraMenu(UnitaOrganizzativa unita, Point punto) {
         JPopupMenu menu = new JPopupMenu();

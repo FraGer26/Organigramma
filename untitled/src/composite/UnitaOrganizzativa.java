@@ -11,6 +11,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo {
     private ComponenteOrganizzativo parent;
     private List<ComponenteOrganizzativo> figli;
     private GraphicUnit graphicUnit;
+    public boolean isRoot=false;
     private List<Role> Roles=new ArrayList<>();
 
     public UnitaOrganizzativa(String nome) {
