@@ -3,7 +3,7 @@ package composite;
 
 import model.Role;
 
-import visitor.UnitaVisitor;
+
 import visitor.Visitor;
 
 import java.util.ArrayList;
@@ -21,6 +21,14 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo {
         this.nome = nome;
         this.figli = new ArrayList<>();
     }
+
+    public GraphicUnit getGraphicUnit() {
+        return graphicUnit;
+    }
+    public void setGraphicUnit(GraphicUnit graphicUnit) {
+        this.graphicUnit = graphicUnit;
+    }
+
 
     public String getNome() {
         return nome;

@@ -12,8 +12,8 @@ import java.awt.event.MouseEvent;
 public class GraphicUnit extends JComponent {
     private UnitaOrganizzativa unitaOrganizzativa;
     private final Rectangle bounds;
-    private OrganigrammaPanel organigrammaPanel;
-    public GraphicUnit(UnitaOrganizzativa unitaOrganizzativa) {
+    public final int HEIGHT=50,WIDTH=100;
+    public GraphicUnit(UnitaOrganizzativa unitaOrganizzativa,OrganigrammaPanel organigrammaPanel) {
         this.unitaOrganizzativa = unitaOrganizzativa;
         this.bounds = new Rectangle(); // Inizializza il rettangolo
 
@@ -22,28 +22,31 @@ public class GraphicUnit extends JComponent {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (bounds.contains(e.getPoint())) {
-                    update();
-                    System.out.println("s");
+                    // Crea il JPopupMenu
+                    CompositeJPopupMenu popupMenu = new CompositeJPopupMenu(unitaOrganizzativa,organigrammaPanel);
+                    // Mostra il popup nella posizione del clic
+                    popupMenu.show(GraphicUnit.this, e.getX(), e.getY());
+
 
                 }
             }
         });
     }
-    private void update(){
-        organigrammaPanel.menu.update(this);
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(WIDTH, HEIGHT); // Dimensioni di default
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         // Calcola il centro e le dimensioni del rettangolo
-        int larghezza = 100;
-        int altezza = 50;
-        int x = getWidth() / 2 - larghezza / 2;
-        int y = getHeight() / 2 - altezza / 2;
+
+        int x = getWidth() / 2 - WIDTH / 2;
+        int y = getHeight() / 2 - HEIGHT / 2;
 
         // Aggiorna il rettangolo di bounds
-        bounds.setBounds(x, y, larghezza, altezza);
+        bounds.setBounds(x, y, WIDTH, HEIGHT);
 
         // Disegna il rettangolo
         g.setColor(Color.LIGHT_GRAY);
@@ -58,7 +61,5 @@ public class GraphicUnit extends JComponent {
         int textY = bounds.y + (bounds.height + fm.getAscent()) / 2;
         g.drawString(unitaOrganizzativa.getNome(), textX, textY);
     }
-    private void disegnaUnita(Graphics g, UnitaOrganizzativa unita, int x, int y, int offset) {
 
-    }
 }

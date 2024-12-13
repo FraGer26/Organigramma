@@ -7,6 +7,7 @@ import composite.Dipendente;
 import composite.GraphicUnit;
 import composite.UnitaOrganizzativa;
 import model.Role;
+import visitor.ComponenteVisitor;
 
 
 import javax.swing.*;
@@ -21,9 +22,9 @@ public class OrganigrammaPanel extends JPanel {
     private UnitaOrganizzativa root;
     private Map<UnitaOrganizzativa, Rectangle> posizioni; // Per tracciare le posizioni dei nodi
     private GraphicUnit selected;
-    public SelectObserver menu = new CompositeJPopupMenu();
-    public OrganigrammaPanel(UnitaOrganizzativa root) {
-        this.root = root;
+    public CompositeJPopupMenu menu;
+    public OrganigrammaPanel() {
+       /* this.root = root;
         this.posizioni = new HashMap<>();
         this.setBackground(Color.WHITE);
 
@@ -38,6 +39,14 @@ public class OrganigrammaPanel extends JPanel {
                 }
             }
         });
+
+*/
+
+       root = new UnitaOrganizzativa("test");
+
+       GraphicUnit gu=new GraphicUnit(root,this);
+       root.setGraphicUnit(gu);
+       add(gu);
 
 
     }
@@ -223,11 +232,10 @@ public class OrganigrammaPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+        ComponenteVisitor visitor=new ComponenteVisitor();
+        root.accept(visitor);
         super.paintComponent(g);
-        if (root != null) {
-            posizioni.clear();
-            disegnaUnita(g, root, getWidth() / 2, 50, getWidth() / 4);
-        }
+
     }
 
     private void disegnaUnita(Graphics g, UnitaOrganizzativa unita, int x, int y, int offset) {
