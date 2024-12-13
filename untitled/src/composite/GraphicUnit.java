@@ -41,9 +41,7 @@ public class GraphicUnit extends JComponent {
     public void paintComponent(Graphics g) {
         old(g);
     }
-    public Rectangle getBounds() {
-        return bounds;
-    }
+
 
     private void old(Graphics g) {
         super.paintComponent(g);

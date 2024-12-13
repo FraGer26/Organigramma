@@ -43,11 +43,11 @@ public class OrganigrammaPanel extends JPanel {
 */
 
        root = new UnitaOrganizzativa("test");
-
+       setLayout(null);
        GraphicUnit gu=new GraphicUnit(root,this);
        root.setGraphicUnit(gu);
-       gu.setLocation(1000,100);
-       add(gu);
+        gu.setBounds(1000, 100, 200, 100);
+        add(gu);
 
 
     }
