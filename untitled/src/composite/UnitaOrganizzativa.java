@@ -3,6 +3,9 @@ package composite;
 
 import model.Role;
 
+import visitor.UnitaVisitor;
+import visitor.Visitor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,4 +53,8 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo {
     public boolean isDipendente() {
         return false;
     }
+    public void accept(Visitor visitor) {
+        visitor.visitUnita(this);
+    }
+
 }

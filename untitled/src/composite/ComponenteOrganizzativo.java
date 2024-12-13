@@ -2,6 +2,8 @@ package composite;
 
 
 
+import visitor.Visitor;
+
 import java.util.List;
 
 public interface ComponenteOrganizzativo {
@@ -15,5 +17,7 @@ public interface ComponenteOrganizzativo {
    void setParent(ComponenteOrganizzativo parent) ;
    boolean isDipendente() ;
 
-    ComponenteOrganizzativo getParent() ;
+   ComponenteOrganizzativo getParent() ;
+   void accept(Visitor visitor);
+
 }

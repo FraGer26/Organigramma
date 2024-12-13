@@ -1,6 +1,7 @@
 package composite;
 
 import model.Role;
+import visitor.Visitor;
 
 import java.util.List;
 
@@ -53,5 +54,8 @@ public class Dipendente implements ComponenteOrganizzativo{
     @Override
     public boolean isDipendente() {
         return true;
+    }
+    public void accept(Visitor visitor) {
+        visitor.visitDipendente(this);
     }
 }

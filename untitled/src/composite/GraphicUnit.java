@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class GraphicUnit extends Component {
+public class GraphicUnit extends JComponent {
     private UnitaOrganizzativa unitaOrganizzativa;
     private final Rectangle bounds;
     private OrganigrammaPanel organigrammaPanel;
