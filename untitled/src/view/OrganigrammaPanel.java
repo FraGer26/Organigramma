@@ -46,6 +46,7 @@ public class OrganigrammaPanel extends JPanel {
 
        GraphicUnit gu=new GraphicUnit(root,this);
        root.setGraphicUnit(gu);
+       gu.setLocation(1000,100);
        add(gu);
 
 

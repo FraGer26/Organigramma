@@ -30,6 +30,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo {
     }
 
 
+
     public String getNome() {
         return nome;
     }

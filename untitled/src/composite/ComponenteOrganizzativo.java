@@ -17,7 +17,7 @@ public interface ComponenteOrganizzativo {
    void setParent(ComponenteOrganizzativo parent) ;
    boolean isDipendente() ;
 
-   ComponenteOrganizzativo getParent() ;
+    ComponenteOrganizzativo getParent() ;
    void accept(Visitor visitor);
 
 }
