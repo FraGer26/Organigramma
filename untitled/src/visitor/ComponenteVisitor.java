@@ -23,6 +23,7 @@ public class ComponenteVisitor implements Visitor {
             Rectangle r=padre.getGraphicUnit().getBounds();
             unita.getGraphicUnit().setBounds(r.x+xOffset*padre.getFigli().indexOf(unita),r.y+yOffset , 100, 50);
 
+
             System.out.println(padre.getFigli().indexOf(unita));
             ArrayList<ComponenteOrganizzativo> figli=(ArrayList<ComponenteOrganizzativo>) padre.getFigli();
             System.out.println(Arrays.toString(figli.toArray()));
