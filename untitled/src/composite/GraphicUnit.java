@@ -1,6 +1,6 @@
 package composite;
 
-import Observer.SelectObserver;
+
 import view.CompositeJPopupMenu;
 import view.OrganigrammaPanel;
 
@@ -11,11 +11,14 @@ import java.awt.event.MouseEvent;
 
 public class GraphicUnit extends JComponent {
     private UnitaOrganizzativa unitaOrganizzativa;
-    private final Rectangle bounds;
+    private  Rectangle bounds;
     public final int HEIGHT=50,WIDTH=100;
+
     public GraphicUnit(UnitaOrganizzativa unitaOrganizzativa,OrganigrammaPanel organigrammaPanel) {
         this.unitaOrganizzativa = unitaOrganizzativa;
-        this.bounds = new Rectangle(); // Inizializza il rettangolo
+
+        this.bounds = new Rectangle(0,0,WIDTH,HEIGHT);// Inizializza con dimensioni predefinite
+        setBounds(bounds);
 
 
         addMouseListener(new MouseAdapter() {
@@ -32,10 +35,8 @@ public class GraphicUnit extends JComponent {
             }
         });
     }
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(WIDTH, HEIGHT); // Dimensioni di default
-    }
+
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -49,7 +50,7 @@ public class GraphicUnit extends JComponent {
 
         int x = getWidth() / 2 - WIDTH / 2;
         int y = getHeight() / 2 - HEIGHT / 2;
-
+        bounds=super.getBounds();
         // Aggiorna il rettangolo di bounds
         bounds.setBounds(x, y, WIDTH, HEIGHT);
 
@@ -66,6 +67,20 @@ public class GraphicUnit extends JComponent {
         int textY = bounds.y + (bounds.height + fm.getAscent()) / 2;
         g.drawString(unitaOrganizzativa.getNome(), textX, textY);
     }
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(WIDTH, HEIGHT);
+    }
+    @Override
+    public Rectangle getBounds() {
+        return super.getBounds();
+    }
+    public void setBounds(Rectangle bounds) {
+        super.setBounds(bounds);
+        this.bounds = bounds;
+    }
+
+
     private void disegnaUnita(Graphics g, UnitaOrganizzativa unita, int x, int y, int offset) {
         int larghezza = 100;
         int altezza = 50;

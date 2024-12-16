@@ -6,6 +6,7 @@ import composite.Dipendente;
 import composite.GraphicUnit;
 import composite.UnitaOrganizzativa;
 import model.Role;
+import visitor.ComponenteVisitor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -125,6 +126,15 @@ public class CompositeJPopupMenu extends JPopupMenu {
         addSeparator();
         add(aggiungiRuoli);
         add(visualizzaRuoli);
+        JMenuItem test= new JMenuItem("Visualizza Ruoli");
+        test.addActionListener(e -> {
+
+            organigrammaPanel.repaint();
+            organigrammaPanel.revalidate();
+        });
+        add( test);
+
+
 
     }
     private static void mostraTabellaDipendenti(UnitaOrganizzativa unita) {

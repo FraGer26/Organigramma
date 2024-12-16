@@ -20,4 +20,5 @@ public interface ComponenteOrganizzativo {
     ComponenteOrganizzativo getParent() ;
    void accept(Visitor visitor);
 
+
 }

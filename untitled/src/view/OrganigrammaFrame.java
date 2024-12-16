@@ -18,7 +18,7 @@ public class OrganigrammaFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(new JScrollPane(organigrammaPanel));
 
-
+      //  setLayout(new BorderLayout());
         add(organigrammaPanel, BorderLayout.CENTER);
         setSize(WIDTH, HEIGHT);
         setVisible(true);
@@ -26,7 +26,6 @@ public class OrganigrammaFrame extends JFrame {
     private OrganigrammaPanel initPanel() {
 
         OrganigrammaPanel panel = new OrganigrammaPanel();
-
         return panel;
     }
 

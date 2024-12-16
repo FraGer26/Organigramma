@@ -17,6 +17,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo {
     public boolean isRoot=false;
     private List<Role> Roles=new ArrayList<>();
 
+
     public UnitaOrganizzativa(String nome) {
         this.nome = nome;
         this.figli = new ArrayList<>();
@@ -64,6 +65,9 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo {
     }
     public void accept(Visitor visitor) {
         visitor.visitUnita(this);
+    }
+    public String toString()   {
+        return getNome() ;
     }
 
 }
