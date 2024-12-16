@@ -13,9 +13,6 @@ import visitor.ComponenteVisitor;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.HashMap;
 import java.util.Map;
 
 public class OrganigrammaPanel extends JPanel {

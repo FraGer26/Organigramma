@@ -17,7 +17,7 @@ public class GraphicUnit extends JComponent {
     public GraphicUnit(UnitaOrganizzativa unitaOrganizzativa,OrganigrammaPanel organigrammaPanel) {
         this.unitaOrganizzativa = unitaOrganizzativa;
 
-        this.bounds = new Rectangle(0,0,WIDTH,HEIGHT);// Inizializza con dimensioni predefinite
+        this.bounds = new Rectangle(400,0,WIDTH,HEIGHT);// Inizializza con dimensioni predefinite
         setBounds(bounds);
 
 
@@ -40,11 +40,6 @@ public class GraphicUnit extends JComponent {
 
     @Override
     public void paintComponent(Graphics g) {
-        old(g);
-    }
-
-
-    private void old(Graphics g) {
         super.paintComponent(g);
         // Calcola il centro e le dimensioni del rettangolo
 
@@ -67,6 +62,9 @@ public class GraphicUnit extends JComponent {
         int textY = bounds.y + (bounds.height + fm.getAscent()) / 2;
         g.drawString(unitaOrganizzativa.getNome(), textX, textY);
     }
+
+
+
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(WIDTH, HEIGHT);
@@ -81,32 +79,5 @@ public class GraphicUnit extends JComponent {
     }
 
 
-    private void disegnaUnita(Graphics g, UnitaOrganizzativa unita, int x, int y, int offset) {
-        int larghezza = 100;
-        int altezza = 50;
 
-        // Disegna il rettangolo
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(x - larghezza / 2, y, larghezza, altezza);
-        g.setColor(Color.BLACK);
-        g.drawRect(x - larghezza / 2, y, larghezza, altezza);
-
-        // Disegna il nome
-        FontMetrics fm = g.getFontMetrics();
-        int textWidth = fm.stringWidth(unita.getNome());
-        g.drawString(unita.getNome(), x - textWidth / 2, y + altezza / 2);
-
-
-        // Disegna i figli
-        int childY = y + 100;
-        int childX = x - (unita.getFigli().size() - 1) * offset / 2;
-
-        for (ComponenteOrganizzativo figlio : unita.getFigli()) {
-            if(!figlio.isDipendente()) {
-                g.drawLine(x, y + altezza, childX, childY);
-                disegnaUnita(g, (UnitaOrganizzativa) figlio, childX, childY, offset / 2);
-                childX += offset;
-            }
-        }
-    }
 }
