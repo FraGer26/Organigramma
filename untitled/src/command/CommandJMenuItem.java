@@ -1,6 +1,4 @@
-package view;
-
-import command.Command;
+package command;
 
 import javax.swing.*;
 

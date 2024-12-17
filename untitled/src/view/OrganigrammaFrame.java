@@ -32,10 +32,32 @@ public class OrganigrammaFrame extends JFrame {
 
     private OrganigrammaPanel initPanel() {
         OrganigrammaPanel panel = new OrganigrammaPanel();
-
-        // Imposta una dimensione preferita per il pannello
-        panel.setPreferredSize(new Dimension(2000, 1000)); // Modifica le dimensioni secondo il contenuto
         panel.setLayout(null); // Layout null per un posizionamento manuale
+
+        // Calcola automaticamente la dimensione preferita del pannello in base ai contenuti
+        panel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                Dimension preferredSize = calculatePreferredSize(panel);
+                panel.setPreferredSize(preferredSize);
+                panel.revalidate();
+            }
+        });
+
         return panel;
+    }
+
+    private Dimension calculatePreferredSize(JPanel panel) {
+        int maxWidth = 0;
+        int maxHeight = 0;
+
+        for (Component component : panel.getComponents()) {
+            Rectangle bounds = component.getBounds();
+            maxWidth = Math.max(maxWidth, bounds.x + bounds.width);
+            maxHeight = Math.max(maxHeight, bounds.y + bounds.height);
+        }
+
+        // Aggiungi un margine
+        return new Dimension(maxWidth + 20, maxHeight + 20);
     }
 }

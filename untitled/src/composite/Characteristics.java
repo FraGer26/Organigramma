@@ -1,7 +1,5 @@
 package composite;
 
-import model.Role;
-
 import java.io.Serial;
 import java.io.Serializable;
 

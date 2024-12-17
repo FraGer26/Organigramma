@@ -1,8 +1,6 @@
 // Percorso file: src/model/UnitaOrganizzativa.java
 package composite;
 
-import model.Role;
-
 
 import visitor.Visitor;
 

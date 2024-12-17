@@ -1,14 +1,14 @@
 package view;
 
-import command.node.*;
-import composite.ComponenteOrganizzativo;
-import composite.Dipendente;
+import command.CommandJMenuItem;
+import command.role.AddRoleCommand;
+import command.role.ShowRoleCommand;
+import command.dipendenti.AddDipendentiCommand;
+import command.dipendenti.ShowDipendentiCommand;
+import command.unit.*;
 import composite.UnitaOrganizzativa;
-import model.Role;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 
 public class CompositeJPopupMenu extends JPopupMenu {
     UnitaOrganizzativa unitaOrganizzativo;

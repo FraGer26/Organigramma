@@ -1,6 +1,5 @@
 package composite;
 
-import model.Role;
 import visitor.Visitor;
 
 import java.util.List;

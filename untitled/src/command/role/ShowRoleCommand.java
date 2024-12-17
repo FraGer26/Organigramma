@@ -1,8 +1,8 @@
-package command.node;
+package command.role;
 
 import command.Command;
 import composite.UnitaOrganizzativa;
-import model.Role;
+import composite.Role;
 import view.OrganigrammaPanel;
 
 import javax.swing.*;
