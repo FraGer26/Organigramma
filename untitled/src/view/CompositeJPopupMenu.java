@@ -2,9 +2,9 @@ package view;
 
 import command.CommandJMenuItem;
 import command.role.AddRoleCommand;
-import command.role.ShowRoleCommand;
+import command.role.ManageRoleCommand;
 import command.dipendenti.AddDipendentiCommand;
-import command.dipendenti.ShowDipendentiCommand;
+import command.dipendenti.ManageDipendentiCommand;
 import command.unit.*;
 import composite.UnitaOrganizzativa;
 
@@ -27,12 +27,9 @@ public class CompositeJPopupMenu extends JPopupMenu {
         add(new CommandJMenuItem("Aggiungi Unità",new NewUnitCommand(unitaOrganizzativo,organigrammaPanel)));
         add(new CommandJMenuItem("Rimuovi Unità",new RemoveUnitCommand(unitaOrganizzativo,organigrammaPanel)));
         addSeparator();
-        add(new CommandJMenuItem("Aggiungi Ruoli",new AddRoleCommand(unitaOrganizzativo,organigrammaPanel)));
-        add(new CommandJMenuItem("Mostra Ruoli",new ShowRoleCommand(unitaOrganizzativo,organigrammaPanel)));
+        add(new CommandJMenuItem("Gestisci Dipendeti",new ManageDipendentiCommand(unitaOrganizzativo,organigrammaPanel)));
         addSeparator();
-        add(new CommandJMenuItem("Aggiungi Dipendenti",new AddDipendentiCommand(unitaOrganizzativo,organigrammaPanel)));
-        add(new CommandJMenuItem("Mostra Dipendeti",new ShowDipendentiCommand(unitaOrganizzativo,organigrammaPanel)));
-
+        add(new CommandJMenuItem("Gestisci Ruoli",new ManageRoleCommand(unitaOrganizzativo,organigrammaPanel)));
 
 
     }

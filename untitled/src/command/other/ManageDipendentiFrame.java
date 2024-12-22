@@ -3,7 +3,7 @@ package command.other;
 import command.CommandJButton;
 import command.dipendenti.AddDipendentiCommand;
 import command.role.AddRoleCommand;
-import command.role.ShowRoleCommand;
+import command.role.ManageRoleCommand;
 import composite.ComponenteOrganizzativo;
 import composite.Dipendente;
 import composite.UnitaOrganizzativa;
@@ -15,11 +15,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GestioneDipendentiFrame extends JFrame {
+public class ManageDipendentiFrame extends JFrame {
     private UnitaOrganizzativa unitaOrganizzativa;
     private OrganigrammaPanel organigrammaPanel;
 
-    public GestioneDipendentiFrame(UnitaOrganizzativa unitaOrganizzativa, OrganigrammaPanel organigrammaPanel) {
+    public ManageDipendentiFrame(UnitaOrganizzativa unitaOrganizzativa, OrganigrammaPanel organigrammaPanel) {
         super("Gestione Dipendenti");
         this.unitaOrganizzativa = unitaOrganizzativa;
         this.organigrammaPanel = organigrammaPanel;
@@ -27,6 +27,7 @@ public class GestioneDipendentiFrame extends JFrame {
     }
 
     private void setUp() {
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(600, 400);
 
@@ -54,6 +55,7 @@ public class GestioneDipendentiFrame extends JFrame {
 
         // Creare i pulsanti per le azioni di aggiunta e rimozione
         JPanel buttonPanel = new JPanel();
+        // JButton aggiungiButton = new JButton("Aggiungi Utente");
         JButton rimuoviButton = new JButton("Rimuovi Utente");
 
         // Aggiungere l'azione al pulsante "Rimuovi Utente"
@@ -69,33 +71,26 @@ public class GestioneDipendentiFrame extends JFrame {
                         unitaOrganizzativa.getFigli().remove(dipendente);
                         model.removeRow(i);
                         i--; // Dopo la rimozione, il prossimo elemento è spostato indietro
+                        repaint();
                     }
                 }
-                // Ricaricare la tabella
-                SwingUtilities.invokeLater(() -> {
-                    model.fireTableDataChanged();
-                    tabella.revalidate();
-                    tabella.repaint();
-                });
             }
         });
 
-        // Aggiungi il comando per aggiungere dipendenti
+        // Aggiungere il pulsante "Aggiungi dipendenti" con il comando personalizzato
         buttonPanel.add(new CommandJButton("Aggiungi dipendenti", new AddDipendentiCommand(unitaOrganizzativa, organigrammaPanel) {
             @Override
             public void execute() {
                 super.execute();
-                SwingUtilities.invokeLater(() -> {
-                    model.fireTableDataChanged(); // Ricarica la tabella dopo l'aggiunta
-                    tabella.revalidate();
-                    tabella.repaint();
-                });
-            }
-        }, buttonPanel));
+                setUp();
 
+            }
+        }));
+
+        // Aggiungere il pulsante per rimuovere utenti, aggiungere ruolo, e visualizzare ruoli
         buttonPanel.add(rimuoviButton);
-        buttonPanel.add(new CommandJButton("Aggiungi ruolo", new AddRoleCommand(unitaOrganizzativa, organigrammaPanel), buttonPanel));
-        buttonPanel.add(new CommandJButton("Visualizza ruoli", new ShowRoleCommand(unitaOrganizzativa, organigrammaPanel), buttonPanel));
+        buttonPanel.add(new CommandJButton("Aggiungi ruolo", new AddRoleCommand(unitaOrganizzativa, organigrammaPanel)));
+        buttonPanel.add(new CommandJButton("Visualizza ruoli", new ManageRoleCommand(unitaOrganizzativa, organigrammaPanel)));
 
         // Aggiungere la tabella e il pannello dei pulsanti al frame
         add(scrollPane, BorderLayout.CENTER);

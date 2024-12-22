@@ -1,15 +1,15 @@
 package command.dipendenti;
 
 import command.Command;
-import command.other.GestioneDipendentiFrame;
+import command.other.ManageDipendentiFrame;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
 
-public class ShowDipendentiCommand  implements Command {
+public class ManageDipendentiCommand implements Command {
     private  final OrganigrammaPanel organigrammaPanel;
     private UnitaOrganizzativa unitaOrganizzativa;
 
-    public ShowDipendentiCommand(UnitaOrganizzativa unitaOrganizzativa, OrganigrammaPanel organigrammaPanel) {
+    public ManageDipendentiCommand(UnitaOrganizzativa unitaOrganizzativa, OrganigrammaPanel organigrammaPanel) {
         this.organigrammaPanel = organigrammaPanel;
         this.unitaOrganizzativa = unitaOrganizzativa;
 
@@ -17,7 +17,7 @@ public class ShowDipendentiCommand  implements Command {
 
     @Override
     public void execute() {
-        new GestioneDipendentiFrame(unitaOrganizzativa, organigrammaPanel);
+        new ManageDipendentiFrame(unitaOrganizzativa, organigrammaPanel);
     }
 }
 
