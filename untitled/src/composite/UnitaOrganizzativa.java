@@ -4,10 +4,11 @@ package composite;
 
 import visitor.Visitor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnitaOrganizzativa  implements ComponenteOrganizzativo {
+public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializable {
     private String nome;
     private ComponenteOrganizzativo parent;
     private List<ComponenteOrganizzativo> figli;

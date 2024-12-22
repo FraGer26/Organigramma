@@ -2,9 +2,10 @@ package composite;
 
 import visitor.Visitor;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Dipendente implements ComponenteOrganizzativo{
+public class Dipendente implements ComponenteOrganizzativo, Serializable {
     private ComponenteOrganizzativo parent;
     private String nome,surname;
     private Role role;

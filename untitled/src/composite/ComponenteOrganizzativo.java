@@ -4,9 +4,10 @@ package composite;
 
 import visitor.Visitor;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface ComponenteOrganizzativo {
+public interface ComponenteOrganizzativo  {
 
     String getNome() ;
 

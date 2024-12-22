@@ -21,13 +21,19 @@ public class OrganigrammaPanel extends JPanel {
     public OrganigrammaPanel() {
       initRootNode();
     }
-    private void initRootNode(){
+    public void initRootNode(){
         root = new UnitaOrganizzativa("test");
         root.isRoot=true;
         setLayout(null);
         GraphicUnit gu=new GraphicUnit(root,this);
         root.setGraphicUnit(gu);
         add(gu);
+    }
+    public UnitaOrganizzativa getRootNode(){
+        return root;
+    }
+    public void setRootNode(UnitaOrganizzativa root){
+        this.root=root;
     }
 
     @Override
