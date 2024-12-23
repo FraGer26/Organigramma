@@ -79,7 +79,7 @@ public class OrganigrammaFrame extends JFrame {
         nuovoItem.addActionListener(e -> nuovoOrganigramma());
         apriItem.addActionListener(e -> apriOrganigramma());
         salvaItem.addActionListener(e -> salvaOrganigramma());
-        chiudiItem.addActionListener(e -> System.exit(0));
+        chiudiItem.addActionListener(e -> chiudiOrganigramma());
 
         // Aggiungi gli elementi al menu File
         fileMenu.add(nuovoItem);
@@ -99,6 +99,11 @@ public class OrganigrammaFrame extends JFrame {
         setJMenuBar(menuBar);
     }
     private void chiudiOrganigramma() {
+        if(organigrammaPanel.isModified() && mostraDialogoSalvataggio()==JOptionPane.YES_OPTION) {
+            salvaOrganigramma();
+        }else{
+            System.exit(0);
+        }
 
     }
 
