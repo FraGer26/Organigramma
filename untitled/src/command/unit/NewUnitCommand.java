@@ -30,7 +30,7 @@ public class NewUnitCommand implements Command {
             unitaOrganizzativa.aggiungiFiglio(figlio);
             organigrammaPanel.add(graphicUnitFiglio);
          //   unitaOrganizzativa.getFigli().forEach(s->{ System.out.println("Nome Padre:"+unitaOrganizzativa.getNome()+"Lista figli:"+s.getNome());});
-
+            organigrammaPanel.setModified(true);
             organigrammaPanel.repaint();
             organigrammaPanel.revalidate();
 

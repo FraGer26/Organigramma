@@ -1,5 +1,6 @@
 package view;
 
+import composite.ComponenteOrganizzativo;
 import composite.GraphicUnit;
 import composite.UnitaOrganizzativa;
 
@@ -89,17 +90,39 @@ public class OrganigrammaFrame extends JFrame {
 
         // Aggiungi il menu alla barra del menu
         menuBar.add(fileMenu);
-
+        JMenu helpMenu = new JMenu("Help");
+        JMenuItem infoItem = new JMenuItem("Chiudi");
+        helpMenu.add(infoItem);
+        infoItem.addActionListener(e -> showInfoDialog());
+        menuBar.add(helpMenu);
         // Imposta la barra del menu sul frame
         setJMenuBar(menuBar);
+    }
+    private void chiudiOrganigramma() {
+
     }
 
     private void nuovoOrganigramma() {
         // Pulisce il pannello per creare un nuovo organigramma
-        organigrammaPanel.removeAll();
-        organigrammaPanel.initRootNode();
-        organigrammaPanel.repaint();
-        JOptionPane.showMessageDialog(this, "Nuovo organigramma creato.");
+        if(organigrammaPanel.isModified() && mostraDialogoSalvataggio()==JOptionPane.YES_OPTION) {
+            salvaOrganigramma();
+        } else if (
+                mostraDialogoSalvataggio()==JOptionPane.NO_OPTION
+        ) {
+            JOptionPane.showMessageDialog(this, "Nessuna Operazione");
+        } else{
+            organigrammaPanel.removeAll();
+            organigrammaPanel.initRootNode();
+            organigrammaPanel.repaint();
+            JOptionPane.showMessageDialog(this, "Nuovo organigramma creato.");
+        }
+    }
+    public static int mostraDialogoSalvataggio() {
+        return JOptionPane.showConfirmDialog(null,
+                "Vuoi salvare le modifiche prima di uscire?",
+                "Conferma Salvataggio",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
     }
 
     private void apriOrganigramma() {
@@ -113,10 +136,6 @@ public class OrganigrammaFrame extends JFrame {
                 if (object instanceof UnitaOrganizzativa) {
                     organigrammaPanel.setRootNode((UnitaOrganizzativa) object);
                     System.out.println(organigrammaPanel.getRootNode().getFigli());
-                    for (UnitaOrganizzativa uo:organigrammaPanel.getRootNode().getFigli()){
-
-                    }
-
                     organigrammaPanel.repaint();
                     organigrammaPanel.revalidate();
                     JOptionPane.showMessageDialog(this, "Organigramma caricato con successo.");
@@ -135,11 +154,46 @@ public class OrganigrammaFrame extends JFrame {
             File file = fileChooser.getSelectedFile();
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
                 oos.writeObject(organigrammaPanel.getRootNode());
+                organigrammaPanel.setModified(false);
                 JOptionPane.showMessageDialog(this, "Organigramma salvato con successo.");
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Errore durante il salvataggio dell'organigramma.", "Errore", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    private void showInfoDialog() {
+        JDialog infoDialog = new JDialog(this, "Informazioni di Aiuto", true);
+        infoDialog.setSize(WIDTH/3, HEIGHT/3);
+        infoDialog.setLocationRelativeTo(null);
+        infoDialog.setResizable(false);
+
+        JTabbedPane tabbedPane = new JTabbedPane();
+
+        JPanel tab1 = new JPanel();
+        tab1.add(new JLabel("<html><h3>Generale</h3>" +
+                "<p>L'applicazione permette di gestire un organigramma aziendale. " +
+                "<br>Non c'è un limite in altezza o larghezza per l'organigramma." +
+                "<br>I nodi devono avere un nome con un numero di caratteri minore di "+"-----"+".</p></html>"));
+        tabbedPane.addTab("Generale", tab1);
+
+        JPanel tab2 = new JPanel();
+        tab2.add(new JLabel(
+                "<html>" +
+                        "<h3>Scorciatoie</h3>" +
+                        "<ol>"+
+                        "<li><b>Doppio click</b>, permette di aggiungere un<br> nodo figlio al nodo cliccato.</li>" +
+                        "<li><b>Tasto centrale del mouse</b>, permette di rinominare<br> il nodo selezionato.</li>" +
+                        "</ol>"+
+                        "</html>"));
+        tabbedPane.addTab("Scorciatoie", tab2);
+
+        JPanel tab3 = new JPanel();
+        tab3.add(new JLabel("<html><h3>About</h3><p>Creato da Francesco Gervino.</p></html>"));
+        tabbedPane.addTab("About", tab3);
+
+        infoDialog.add(tabbedPane);
+        infoDialog.setVisible(true);
     }
 
 }

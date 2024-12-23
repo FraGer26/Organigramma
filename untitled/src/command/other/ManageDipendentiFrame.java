@@ -70,6 +70,7 @@ public class ManageDipendentiFrame extends JFrame {
                         Dipendente dipendente = (Dipendente) unitaOrganizzativa.getFigli().get(i);
                         unitaOrganizzativa.getFigli().remove(dipendente);
                         model.removeRow(i);
+                        organigrammaPanel.setModified(true);
                         i--; // Dopo la rimozione, il prossimo elemento è spostato indietro
                         repaint();
                     }

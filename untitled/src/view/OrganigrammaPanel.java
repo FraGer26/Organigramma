@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class OrganigrammaPanel extends JPanel {
     public   UnitaOrganizzativa root;
+    private boolean modified = false;
     public OrganigrammaPanel() {
       initRootNode();
     }
@@ -35,11 +36,17 @@ public class OrganigrammaPanel extends JPanel {
     public void setRootNode(UnitaOrganizzativa root){
         this.root=root;
     }
+    public void setModified(boolean modified){
+        this.modified=modified;
+    }
+    public boolean isModified(){
+        return modified;
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ComponenteVisitor visitor=new ComponenteVisitor();
+        ComponenteVisitor visitor=new ComponenteVisitor(this);
         root.accept(visitor);
         DrawLineVisitor lineVisitor = new DrawLineVisitor(g);
         root.accept(lineVisitor);

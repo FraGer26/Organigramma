@@ -4,6 +4,8 @@ import composite.ComponenteOrganizzativo;
 import composite.Dipendente;
 import composite.GraphicUnit;
 import composite.UnitaOrganizzativa;
+import view.OrganigrammaPanel;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -12,10 +14,15 @@ public class ComponenteVisitor implements Visitor {
     private int yOffset = 100;  // Distanza verticale tra i livelli
     private int xOffset = 50;   // Distanza orizzontale minima tra i nodi
     private int subtreeSpacing = 20; // Spazio aggiuntivo tra sotto-alberi
-
+    private OrganigrammaPanel organigrammaPanel;
+    public ComponenteVisitor(OrganigrammaPanel organigrammaPanel) {
+     this.organigrammaPanel = organigrammaPanel;
+    }
     @Override
     public void visitUnita(UnitaOrganizzativa unita) {
+
         if (!unita.isRoot) {
+
             UnitaOrganizzativa padre = (UnitaOrganizzativa) unita.getParent();
 
             // Calcola la larghezza totale del sotto-albero del padre
@@ -33,6 +40,7 @@ public class ComponenteVisitor implements Visitor {
 
             // Imposta la posizione del nodo
             unita.getGraphicUnit().setBounds(leftOffset, parentY + yOffset, 100, 50);
+            organigrammaPanel.add(unita.getGraphicUnit());
         }
 
         // Visita ricorsivamente i figli

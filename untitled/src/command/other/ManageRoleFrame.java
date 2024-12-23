@@ -67,6 +67,7 @@ public class ManageRoleFrame extends JFrame {
                         Role roleToRemove = (Role) model.getValueAt(i, 0);
                         unitaOrganizzativa.getRoles().remove(roleToRemove);
                         model.removeRow(i);
+                        organigrammaPanel.setModified(true);
                         i--;
                         repaint();
                     }

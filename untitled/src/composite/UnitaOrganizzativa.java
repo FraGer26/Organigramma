@@ -34,6 +34,9 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     public String getNome() {
         return nome;
     }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
     public List<Role> getRoles() {
         return Roles;
     }

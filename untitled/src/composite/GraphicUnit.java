@@ -12,29 +12,18 @@ import java.io.Serializable;
 
 public class GraphicUnit  extends JComponent {
     private UnitaOrganizzativa unitaOrganizzativa;
+    private OrganigrammaPanel organigrammaPanel;
     private  Rectangle bounds;
     public final int HEIGHT=50,WIDTH=100;
 
     public GraphicUnit(UnitaOrganizzativa unitaOrganizzativa,OrganigrammaPanel organigrammaPanel) {
         this.unitaOrganizzativa = unitaOrganizzativa;
-
+        this.organigrammaPanel=organigrammaPanel;
         this.bounds = new Rectangle(400,0,WIDTH,HEIGHT);// Inizializza con dimensioni predefinite
         setBounds(bounds);
 
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (bounds.contains(e.getPoint())) {
-                    // Crea il JPopupMenu
-                    CompositeJPopupMenu popupMenu = new CompositeJPopupMenu(unitaOrganizzativa,organigrammaPanel);
-                    // Mostra il popup nella posizione del clic
-                    popupMenu.show(GraphicUnit.this, e.getX(), e.getY());
 
-
-                }
-            }
-        });
     }
 
 
@@ -43,7 +32,7 @@ public class GraphicUnit  extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // Calcola il centro e le dimensioni del rettangolo
-
+        popupMenu();
         int x = getWidth() / 2 - WIDTH / 2;
         int y = getHeight() / 2 - HEIGHT / 2;
         bounds=super.getBounds();
@@ -64,8 +53,6 @@ public class GraphicUnit  extends JComponent {
         g.drawString(unitaOrganizzativa.getNome(), textX, textY);
     }
 
-
-
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(WIDTH, HEIGHT);
@@ -74,11 +61,27 @@ public class GraphicUnit  extends JComponent {
     public Rectangle getBounds() {
         return super.getBounds();
     }
+    @Override
     public void setBounds(Rectangle bounds) {
         super.setBounds(bounds);
         this.bounds = bounds;
     }
 
+    private void popupMenu(){
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (bounds.contains(e.getPoint())) {
+                    // Crea il JPopupMenu
+                    CompositeJPopupMenu popupMenu = new CompositeJPopupMenu(unitaOrganizzativa,organigrammaPanel);
+                    // Mostra il popup nella posizione del clic
+                    popupMenu.show(GraphicUnit.this, e.getX(), e.getY());
+
+
+                }
+            }
+        });
+    }
 
 
 }

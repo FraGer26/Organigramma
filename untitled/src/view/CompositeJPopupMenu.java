@@ -25,6 +25,7 @@ public class CompositeJPopupMenu extends JPopupMenu {
 
 
         add(new CommandJMenuItem("Aggiungi Unità",new NewUnitCommand(unitaOrganizzativo,organigrammaPanel)));
+        add(new CommandJMenuItem("Rinomina Unità",new RenameUnitCommand(unitaOrganizzativo,organigrammaPanel)));
         add(new CommandJMenuItem("Rimuovi Unità",new RemoveUnitCommand(unitaOrganizzativo,organigrammaPanel)));
         addSeparator();
         add(new CommandJMenuItem("Gestisci Dipendeti",new ManageDipendentiCommand(unitaOrganizzativo,organigrammaPanel)));
