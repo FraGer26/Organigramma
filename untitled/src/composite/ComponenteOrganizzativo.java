@@ -19,4 +19,5 @@ public interface ComponenteOrganizzativo  {
     void accept(Visitor visitor);
 
 
+    int getHeight();
 }

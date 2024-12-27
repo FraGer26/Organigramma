@@ -22,8 +22,8 @@ public class NewUnitCommand implements Command {
 
         String nomeFiglio = JOptionPane.showInputDialog("Inserisci il nome della nuova unità:");
         if (nomeFiglio != null && !nomeFiglio.isEmpty()) {
-
-            UnitaOrganizzativa figlio = new UnitaOrganizzativa(nomeFiglio);
+            int altezzaPadre= unitaOrganizzativa.getHeight();
+            UnitaOrganizzativa figlio = new UnitaOrganizzativa(nomeFiglio,altezzaPadre+1);
             GraphicUnit graphicUnitFiglio =new GraphicUnit(figlio,organigrammaPanel);
             graphicUnitFiglio.setVisible(true);
 

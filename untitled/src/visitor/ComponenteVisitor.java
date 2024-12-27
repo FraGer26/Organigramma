@@ -6,14 +6,15 @@ import composite.GraphicUnit;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
 
-import java.awt.*;
 import java.util.ArrayList;
+
+import static composite.GraphicUnit.*;
 
 public class ComponenteVisitor implements Visitor {
 
-    private int yOffset = 100;  // Distanza verticale tra i livelli
-    private int xOffset = 50;   // Distanza orizzontale minima tra i nodi
-    private int subtreeSpacing = 50; // Spazio aggiuntivo tra sotto-alberi
+    private int height, width;  // Altezza e larghezza complessiva dell'organigramma
+    private int xLeaf = HORIZONTAL_OFFSET;    // Offset orizzontale iniziale per la posizione dei nodi foglia
+
     private OrganigrammaPanel organigrammaPanel;
 
     public ComponenteVisitor(OrganigrammaPanel organigrammaPanel) {
@@ -21,29 +22,31 @@ public class ComponenteVisitor implements Visitor {
     }
 
     @Override
-    public void visitUnita(UnitaOrganizzativa unita) {
+    public void visit(UnitaOrganizzativa unita) {
 
-        if (!unita.isRoot) {
             loadUpdate(unita);
 
-            UnitaOrganizzativa padre = (UnitaOrganizzativa) unita.getParent();
+            if(unita.isLeaf()) width++;
+            height = Math.max(unita.getHeight(), height);
+            // Calcolo la posizione del nodo
+            if (unita.isLeaf()) {
+                // Se è una foglia, assegno una posizione orizzontale basata su xLeaf
+                unita.getGraphicUnit().setBounds(xLeaf, getY(unita), unita.getGraphicUnit().getBounds().width, unita.getGraphicUnit().getBounds().height);
+                xLeaf += unita.getGraphicUnit().getBounds().width + 10; // Aumento xLeaf per il prossimo nodo foglia
+            } else {
+                // Se non è una foglia, calcolo la posizione in base ai figli
+                if (unita.getFigli().size() == 1) {
+                    // Se ha un solo figlio, la sua posizione sarà la stessa del figlio
+                    int xChild = ((UnitaOrganizzativa)unita.getFigli().get(0)).getGraphicUnit().getBounds().x;
 
-            // Calcola la larghezza totale del sotto-albero del padre
-            int totalWidth = calculateSubtreeWidth(padre);
-            int parentX = padre.getGraphicUnit().getBounds().x;
-            int parentY = padre.getGraphicUnit().getBounds().y;
+                    unita.getGraphicUnit().setBounds(xChild, getY(unita), unita.getGraphicUnit().getBounds().width, unita.getGraphicUnit().getBounds().height);
+                } else {
+                    // Se ha più figli, calcolo la media tra il primo e l'ultimo figlio
+                    int xParent = getXParent(unita);
+                    unita.getGraphicUnit().setBounds(xParent, getY(unita), unita.getGraphicUnit().getBounds().width, unita.getGraphicUnit().getBounds().height);
+                }
+            }
 
-            // Ottieni l'indice del figlio corrente
-            ArrayList<ComponenteOrganizzativo> figli = (ArrayList<ComponenteOrganizzativo>) padre.getFigli();
-            int index = figli.indexOf(unita);
-
-            // Calcola la posizione orizzontale del figlio basandosi sulla larghezza dei sotto-alberi precedenti
-            int currentOffset = calculateChildOffset(padre, index);
-            int leftOffset = parentX - (totalWidth / 2) + currentOffset;
-
-            // Imposta la posizione del nodo
-            unita.getGraphicUnit().setBounds(leftOffset, parentY + yOffset, 100, 50);
-        }
 
         // Visita ricorsivamente i figli
         for (ComponenteOrganizzativo co : unita.getFigli()) {
@@ -54,41 +57,34 @@ public class ComponenteVisitor implements Visitor {
     }
 
     private void loadUpdate(UnitaOrganizzativa unita) {
-        if (((UnitaOrganizzativa) unita.getParent()).getGraphicUnit().getOrganigrammaPanel() != unita.getGraphicUnit().getOrganigrammaPanel()) {
+        if (!unita.isRoot && ((UnitaOrganizzativa) unita.getParent()).getGraphicUnit().getOrganigrammaPanel() != unita.getGraphicUnit().getOrganigrammaPanel()) {
             unita.getGraphicUnit().setOrganigrammaPanel(((UnitaOrganizzativa) unita.getParent()).getGraphicUnit().getOrganigrammaPanel());
             organigrammaPanel.add(unita.getGraphicUnit());
         }
     }
 
-    @Override
-    public void visitDipendente(Dipendente dipendente) {
-        // Implementazione vuota per il momento
+
+
+    // Calcola la posizione X media tra il primo e l'ultimo figlio
+    private int getXParent(UnitaOrganizzativa unita) {
+        if(unita instanceof UnitaOrganizzativa) {
+            int xFirst = ((UnitaOrganizzativa) unita.getFigli().get(0)).getGraphicUnit().getBounds().x;
+            int xLast = ((UnitaOrganizzativa) unita.getFigli().get(unita.getFigli().size() - 1)).getGraphicUnit().getBounds().x;
+            return xFirst + (xLast - xFirst) / 2;
+        }
+        return 0;
     }
 
-    // Calcola la larghezza del sotto-albero di un nodo
-    private int calculateSubtreeWidth(UnitaOrganizzativa unita) {
-        if (unita.getFigli().isEmpty()) {
-            return Math.max(unita.getGraphicUnit().getBounds().width, 100);  // Usa la larghezza del nodo o 100 di default
-        }
-
-        int totalWidth = 0;
-        for (ComponenteOrganizzativo co : unita.getFigli()) {
-            if (co instanceof UnitaOrganizzativa) {
-                totalWidth += calculateSubtreeWidth((UnitaOrganizzativa) co) + subtreeSpacing;
-            }
-        }
-        return Math.max(totalWidth, unita.getGraphicUnit().getBounds().width);
+    // Calcola la posizione Y di un nodo in base alla sua profondità
+    private int getY(UnitaOrganizzativa unita) {
+        return unita.getHeight()* (VERTICAL_SPACE+HEIGHT) + VERTICAL_OFFSET; // Y posizionato in base alla profondità
     }
 
-    // Calcola l'offset cumulativo per posizionare un figlio, basato sulla larghezza dei fratelli precedenti
-    private int calculateChildOffset(UnitaOrganizzativa padre, int index) {
-        int offset = 0;
-        for (int i = 0; i < index; i++) {
-            ComponenteOrganizzativo co = padre.getFigli().get(i);
-            if (co instanceof UnitaOrganizzativa) {
-                offset += calculateSubtreeWidth((UnitaOrganizzativa) co) + subtreeSpacing;
-            }
-        }
-        return offset;
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

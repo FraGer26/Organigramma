@@ -13,6 +13,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     @Serial
     private static final long serialVersionUID = 2L;
     private String nome;
+    private final int altezza;
     private ComponenteOrganizzativo parent;
     private List<ComponenteOrganizzativo> figli;
     private GraphicUnit graphicUnit;
@@ -20,8 +21,9 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     private List<Role> Roles=new ArrayList<>();
 
 
-    public UnitaOrganizzativa(String nome) {
+    public UnitaOrganizzativa(String nome, int altezza) {
         this.nome = nome;
+        this.altezza = altezza;
         this.figli = new ArrayList<>();
     }
 
@@ -33,7 +35,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     }
 
 
-
+    public boolean isLeaf() {return figli.isEmpty();}
     public String getNome() {
         return nome;
     }
@@ -69,10 +71,12 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
         return false;
     }
     public void accept(Visitor visitor) {
-        visitor.visitUnita(this);
+        visitor.visit(this);
     }
     public String toString()   {
         return getNome() ;
     }
-
+    public int getHeight() {
+        return altezza;
+    }
 }

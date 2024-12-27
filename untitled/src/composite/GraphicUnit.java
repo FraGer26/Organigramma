@@ -12,10 +12,15 @@ import java.awt.event.MouseEvent;
 import java.io.Serializable;
 
 public class GraphicUnit  extends JComponent {
+
     private UnitaOrganizzativa unitaOrganizzativa;
     private OrganigrammaPanel organigrammaPanel;
     private  Rectangle bounds;
-    public final int HEIGHT=50,WIDTH=100;
+    public static final int
+            HEIGHT = 66, WIDTH = (int) (HEIGHT*2.5),
+            CHARACTER_LIMIT = 27, BORDER_WIDTH=2,
+            VERTICAL_SPACE = HEIGHT, VERTICAL_OFFSET = 20,//Spazio e offset lasciato tra un nodo e un altro in verticale
+            HORIZONTAL_SPACE = WIDTH/3, HORIZONTAL_OFFSET = 20;//Spazio e offset lasciato tra un nodo e un altro in orizzontale
 
     public GraphicUnit(UnitaOrganizzativa unitaOrganizzativa,OrganigrammaPanel organigrammaPanel) {
         this.unitaOrganizzativa = unitaOrganizzativa;

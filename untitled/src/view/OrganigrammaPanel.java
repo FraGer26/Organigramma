@@ -23,7 +23,8 @@ public class OrganigrammaPanel extends JPanel {
       initRootNode();
     }
     public void initRootNode(){
-        root = new UnitaOrganizzativa("Nuova Unita");
+        int altezza=0;
+        root = new UnitaOrganizzativa("Nuova Unita",altezza);
         root.isRoot=true;
         setLayout(null);
         GraphicUnit gu=new GraphicUnit(root,this);
@@ -50,6 +51,10 @@ public class OrganigrammaPanel extends JPanel {
         root.accept(visitor);
         DrawLineVisitor lineVisitor = new DrawLineVisitor(g);
         root.accept(lineVisitor);
+
+        setPreferredSize(new Dimension(
+                GraphicUnit.HORIZONTAL_OFFSET + GraphicUnit.WIDTH*2 + (GraphicUnit.WIDTH+ GraphicUnit.HORIZONTAL_SPACE)* visitor.getWidth(),
+                GraphicUnit.VERTICAL_OFFSET + GraphicUnit.HEIGHT*2 +(GraphicUnit.HEIGHT+ GraphicUnit.VERTICAL_SPACE)* visitor.getHeight()));
 
 
     }

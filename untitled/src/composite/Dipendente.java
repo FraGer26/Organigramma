@@ -56,6 +56,11 @@ public class Dipendente implements ComponenteOrganizzativo, Serializable {
         return true;
     }
     public void accept(Visitor visitor) {
-        visitor.visitDipendente(this);
+       throw new UnsupportedOperationException("Not supported getFigli from Dipendente");
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
     }
 }

@@ -16,7 +16,7 @@ public class DrawLineVisitor implements Visitor {
     }
 
     @Override
-    public void visitUnita(UnitaOrganizzativa unita) {
+    public void visit(UnitaOrganizzativa unita) {
         if (!unita.getFigli().isEmpty()) {
             // Recupera il rettangolo del GraphicUnit del padre
             Rectangle parentBounds = unita.getGraphicUnit().getBounds();
@@ -42,8 +42,5 @@ public class DrawLineVisitor implements Visitor {
         }
     }
 
-    @Override
-    public void visitDipendente(Dipendente dipendente) {
-        // Per ora non disegniamo linee per i Dipendenti
-    }
+
 }
