@@ -2,6 +2,7 @@ package composite;
 
 
 import view.CompositeJPopupMenu;
+import view.OrganigrammaFrame;
 import view.OrganigrammaPanel;
 
 import javax.swing.*;
@@ -12,14 +13,14 @@ import java.io.Serializable;
 
 public class GraphicUnit  extends JComponent {
     private UnitaOrganizzativa unitaOrganizzativa;
-     OrganigrammaPanel organigrammaPanel;
+    private OrganigrammaPanel organigrammaPanel;
     private  Rectangle bounds;
     public final int HEIGHT=50,WIDTH=100;
 
     public GraphicUnit(UnitaOrganizzativa unitaOrganizzativa,OrganigrammaPanel organigrammaPanel) {
         this.unitaOrganizzativa = unitaOrganizzativa;
         this.organigrammaPanel=organigrammaPanel;
-        this.bounds = new Rectangle(400,0,WIDTH,HEIGHT);// Inizializza con dimensioni predefinite
+        this.bounds = new Rectangle((OrganigrammaFrame.WIDTH-WIDTH)/2,0,WIDTH,HEIGHT);// Inizializza con dimensioni predefinite
         setBounds(bounds);
 
 

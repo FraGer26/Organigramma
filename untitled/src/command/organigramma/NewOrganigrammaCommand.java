@@ -6,19 +6,19 @@ import view.OrganigrammaPanel;
 
 import javax.swing.*;
 
+import static command.organigramma.SaveOrganigrammaCommand.mostraDialogoSalvataggio;
+
 public class NewOrganigrammaCommand implements Command {
     private OrganigrammaPanel organigrammaPanel;
-    private UnitaOrganizzativa unitaOrganizzativa;
-    public NewOrganigrammaCommand(UnitaOrganizzativa unitaOrganizzativa,OrganigrammaPanel organigrammaPanel) {
+
+    public NewOrganigrammaCommand(OrganigrammaPanel organigrammaPanel) {
         this.organigrammaPanel = organigrammaPanel;
-        this.unitaOrganizzativa = unitaOrganizzativa;
     }
     @Override
     public void execute() {
         // Pulisce il pannello per creare un nuovo organigramma
-        int res=mostraDialogoSalvataggio();
-        if(res== JOptionPane.YES_OPTION) {
-          //  salvaOrganigramma();
+        int res=mostraDialogoSalvataggio(organigrammaPanel);
+        if(res== JOptionPane.YES_OPTION) {new SaveOrganigrammaCommand(organigrammaPanel).execute();
         } else if (res==JOptionPane.NO_OPTION) {
             organigrammaPanel.removeAll();
             organigrammaPanel.initRootNode();
@@ -29,15 +29,6 @@ public class NewOrganigrammaCommand implements Command {
 
         }
     }
-    public  int mostraDialogoSalvataggio() {
-        if(organigrammaPanel.isModified()){
-            return  JOptionPane.showConfirmDialog(null,
-                    "Vuoi salvare le modifiche?",
-                    "Conferma Salvataggio",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
-        }
-        return 1;
-    }
+
 
 }
