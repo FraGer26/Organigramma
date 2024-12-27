@@ -1,13 +1,13 @@
 package view;
 
-import composite.ComponenteOrganizzativo;
-import composite.GraphicUnit;
+
 import composite.UnitaOrganizzativa;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 
 public class OrganigrammaFrame extends JFrame {
@@ -20,8 +20,15 @@ public class OrganigrammaFrame extends JFrame {
         initMenu();
     }
 
+
     private void initFrame() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                chiudiOrganigramma();
+            }
+        });
+
 
         // Avvolgi il pannello in uno JScrollPane
         JScrollPane scrollPane = new JScrollPane(organigrammaPanel);
@@ -91,7 +98,7 @@ public class OrganigrammaFrame extends JFrame {
         // Aggiungi il menu alla barra del menu
         menuBar.add(fileMenu);
         JMenu helpMenu = new JMenu("Help");
-        JMenuItem infoItem = new JMenuItem("Chiudi");
+        JMenuItem infoItem = new JMenuItem("info");
         helpMenu.add(infoItem);
         infoItem.addActionListener(e -> showInfoDialog());
         menuBar.add(helpMenu);
@@ -99,39 +106,49 @@ public class OrganigrammaFrame extends JFrame {
         setJMenuBar(menuBar);
     }
     private void chiudiOrganigramma() {
-        if(organigrammaPanel.isModified() && mostraDialogoSalvataggio()==JOptionPane.YES_OPTION) {
+        int res=mostraDialogoSalvataggio();
+        if(res==JOptionPane.YES_OPTION) {
             salvaOrganigramma();
-        }else{
+        }else if (res==JOptionPane.NO_OPTION){
             System.exit(0);
+        }else{
+
         }
 
     }
 
     private void nuovoOrganigramma() {
         // Pulisce il pannello per creare un nuovo organigramma
-        if(organigrammaPanel.isModified() && mostraDialogoSalvataggio()==JOptionPane.YES_OPTION) {
+        int res=mostraDialogoSalvataggio();
+        if(res==JOptionPane.YES_OPTION) {
             salvaOrganigramma();
-        } else if (
-                mostraDialogoSalvataggio()==JOptionPane.NO_OPTION
-        ) {
-            JOptionPane.showMessageDialog(this, "Nessuna Operazione");
-        } else{
+        } else if (res==JOptionPane.NO_OPTION) {
             organigrammaPanel.removeAll();
             organigrammaPanel.initRootNode();
             organigrammaPanel.repaint();
+            organigrammaPanel.revalidate();
             JOptionPane.showMessageDialog(this, "Nuovo organigramma creato.");
+        } else{
+
         }
     }
-    public static int mostraDialogoSalvataggio() {
-        return JOptionPane.showConfirmDialog(null,
-                "Vuoi salvare le modifiche prima di uscire?",
-                "Conferma Salvataggio",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
+    public  int mostraDialogoSalvataggio() {
+       if(organigrammaPanel.isModified()){
+         return  JOptionPane.showConfirmDialog(null,
+                   "Vuoi salvare le modifiche?",
+                   "Conferma Salvataggio",
+                   JOptionPane.YES_NO_OPTION,
+                   JOptionPane.QUESTION_MESSAGE);
+       }
+       return 1;
     }
 
     private void apriOrganigramma() {
         // Permette di caricare un organigramma da file
+        int res=mostraDialogoSalvataggio();
+        if(res==JOptionPane.YES_OPTION) {
+            salvaOrganigramma();
+            }
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -139,8 +156,15 @@ public class OrganigrammaFrame extends JFrame {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
                 Object object = ois.readObject();
                 if (object instanceof UnitaOrganizzativa) {
-                    organigrammaPanel.setRootNode((UnitaOrganizzativa) object);
-                    System.out.println(organigrammaPanel.getRootNode().getFigli());
+                    UnitaOrganizzativa root = (UnitaOrganizzativa) object;
+
+                    organigrammaPanel.removeAll();
+
+                    organigrammaPanel.setRootNode(root);
+                    root.getGraphicUnit().setOrganigrammaPanel(organigrammaPanel);
+                    organigrammaPanel.add(root.getGraphicUnit());
+
+
                     organigrammaPanel.repaint();
                     organigrammaPanel.revalidate();
                     JOptionPane.showMessageDialog(this, "Organigramma caricato con successo.");
@@ -149,7 +173,7 @@ public class OrganigrammaFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Errore durante il caricamento dell'organigramma.", "Errore", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
+        }
 
     private void salvaOrganigramma() {
         // Permette di salvare l'organigramma su file

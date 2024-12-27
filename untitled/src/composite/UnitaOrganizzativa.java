@@ -4,11 +4,14 @@ package composite;
 
 import visitor.Visitor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializable {
+    @Serial
+    private static final long serialVersionUID = 2L;
     private String nome;
     private ComponenteOrganizzativo parent;
     private List<ComponenteOrganizzativo> figli;

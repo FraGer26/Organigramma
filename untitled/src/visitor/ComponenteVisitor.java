@@ -21,7 +21,9 @@ public class ComponenteVisitor implements Visitor {
     @Override
     public void visitUnita(UnitaOrganizzativa unita) {
 
+
         if (!unita.isRoot) {
+            loadUpdate(unita);
 
             UnitaOrganizzativa padre = (UnitaOrganizzativa) unita.getParent();
 
@@ -40,14 +42,26 @@ public class ComponenteVisitor implements Visitor {
 
             // Imposta la posizione del nodo
             unita.getGraphicUnit().setBounds(leftOffset, parentY + yOffset, 100, 50);
-            organigrammaPanel.add(unita.getGraphicUnit());
+
+
+
+
+
+
         }
 
         // Visita ricorsivamente i figli
         for (ComponenteOrganizzativo co : unita.getFigli()) {
             if (co instanceof UnitaOrganizzativa) {
+
                 co.accept(this);
             }
+        }
+    }
+    private void loadUpdate(UnitaOrganizzativa unita) {
+        if(((UnitaOrganizzativa)unita.getParent()).getGraphicUnit().getOrganigrammaPanel()!=unita.getGraphicUnit().getOrganigrammaPanel()) {
+            unita.getGraphicUnit().setOrganigrammaPanel(((UnitaOrganizzativa)unita.getParent()).getGraphicUnit().getOrganigrammaPanel());
+            organigrammaPanel.add(unita.getGraphicUnit());
         }
     }
 

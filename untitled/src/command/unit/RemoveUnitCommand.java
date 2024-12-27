@@ -16,7 +16,6 @@ public class RemoveUnitCommand implements Command {
         if (unitaOrganizzativa.getParent() != null) {
             unitaOrganizzativa.getParent().rimuoviFiglio(unitaOrganizzativa);
             organigrammaPanel.setModified(true);
-            System.out.println( unitaOrganizzativa.getParent().getFigli());
             unitaOrganizzativa.getGraphicUnit().setVisible(false);
             organigrammaPanel.repaint();
             organigrammaPanel.revalidate();

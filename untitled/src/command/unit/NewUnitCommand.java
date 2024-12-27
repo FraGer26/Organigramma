@@ -8,7 +8,7 @@ import view.OrganigrammaPanel;
 import javax.swing.*;
 
 public class NewUnitCommand implements Command {
-    private  final OrganigrammaPanel organigrammaPanel;
+    private  OrganigrammaPanel organigrammaPanel;
     private UnitaOrganizzativa unitaOrganizzativa;
 
     public NewUnitCommand(UnitaOrganizzativa unitaOrganizzativa, OrganigrammaPanel organigrammaPanel) {
@@ -16,6 +16,7 @@ public class NewUnitCommand implements Command {
         this.unitaOrganizzativa = unitaOrganizzativa;
 
     }
+
     public void execute() {
 
 
@@ -31,6 +32,8 @@ public class NewUnitCommand implements Command {
             organigrammaPanel.add(graphicUnitFiglio);
          //   unitaOrganizzativa.getFigli().forEach(s->{ System.out.println("Nome Padre:"+unitaOrganizzativa.getNome()+"Lista figli:"+s.getNome());});
             organigrammaPanel.setModified(true);
+            System.out.println(unitaOrganizzativa.getFigli());
+
             organigrammaPanel.repaint();
             organigrammaPanel.revalidate();
 

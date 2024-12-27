@@ -1,4 +1,4 @@
-package command.other;
+package command.frame;
 
 import command.CommandJButton;
 import command.role.AddRoleCommand;

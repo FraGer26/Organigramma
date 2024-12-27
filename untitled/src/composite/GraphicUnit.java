@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 public class GraphicUnit  extends JComponent {
     private UnitaOrganizzativa unitaOrganizzativa;
-    private OrganigrammaPanel organigrammaPanel;
+     OrganigrammaPanel organigrammaPanel;
     private  Rectangle bounds;
     public final int HEIGHT=50,WIDTH=100;
 
@@ -24,6 +24,12 @@ public class GraphicUnit  extends JComponent {
 
 
 
+    }
+    public void setOrganigrammaPanel(OrganigrammaPanel organigrammaPanel) {
+        this.organigrammaPanel = organigrammaPanel;
+    }
+    public OrganigrammaPanel getOrganigrammaPanel() {
+        return organigrammaPanel;
     }
 
 

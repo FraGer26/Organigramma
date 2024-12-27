@@ -17,13 +17,13 @@ import java.awt.*;
 import java.util.Map;
 
 public class OrganigrammaPanel extends JPanel {
-    public   UnitaOrganizzativa root;
+    public UnitaOrganizzativa root;
     private boolean modified = false;
     public OrganigrammaPanel() {
       initRootNode();
     }
     public void initRootNode(){
-        root = new UnitaOrganizzativa("test");
+        root = new UnitaOrganizzativa("Nuova Unita");
         root.isRoot=true;
         setLayout(null);
         GraphicUnit gu=new GraphicUnit(root,this);

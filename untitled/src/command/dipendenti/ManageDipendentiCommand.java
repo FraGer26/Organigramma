@@ -1,7 +1,7 @@
 package command.dipendenti;
 
 import command.Command;
-import command.other.ManageDipendentiFrame;
+import command.frame.ManageDipendentiFrame;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
 
