@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 import java.io.*;
 
 public class OrganigrammaFrame extends JFrame {
-    public static final int HEIGHT = 600, WIDTH = 800;
+    public static final int HEIGHT = 600, WIDTH = 2000;
     private OrganigrammaPanel organigrammaPanel;
 
     public OrganigrammaFrame() {

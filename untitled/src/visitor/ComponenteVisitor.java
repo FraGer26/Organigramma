@@ -13,14 +13,15 @@ public class ComponenteVisitor implements Visitor {
 
     private int yOffset = 100;  // Distanza verticale tra i livelli
     private int xOffset = 50;   // Distanza orizzontale minima tra i nodi
-    private int subtreeSpacing = 20; // Spazio aggiuntivo tra sotto-alberi
+    private int subtreeSpacing = 50; // Spazio aggiuntivo tra sotto-alberi
     private OrganigrammaPanel organigrammaPanel;
+
     public ComponenteVisitor(OrganigrammaPanel organigrammaPanel) {
-     this.organigrammaPanel = organigrammaPanel;
+        this.organigrammaPanel = organigrammaPanel;
     }
+
     @Override
     public void visitUnita(UnitaOrganizzativa unita) {
-
 
         if (!unita.isRoot) {
             loadUpdate(unita);
@@ -42,25 +43,19 @@ public class ComponenteVisitor implements Visitor {
 
             // Imposta la posizione del nodo
             unita.getGraphicUnit().setBounds(leftOffset, parentY + yOffset, 100, 50);
-
-
-
-
-
-
         }
 
         // Visita ricorsivamente i figli
         for (ComponenteOrganizzativo co : unita.getFigli()) {
             if (co instanceof UnitaOrganizzativa) {
-
                 co.accept(this);
             }
         }
     }
+
     private void loadUpdate(UnitaOrganizzativa unita) {
-        if(((UnitaOrganizzativa)unita.getParent()).getGraphicUnit().getOrganigrammaPanel()!=unita.getGraphicUnit().getOrganigrammaPanel()) {
-            unita.getGraphicUnit().setOrganigrammaPanel(((UnitaOrganizzativa)unita.getParent()).getGraphicUnit().getOrganigrammaPanel());
+        if (((UnitaOrganizzativa) unita.getParent()).getGraphicUnit().getOrganigrammaPanel() != unita.getGraphicUnit().getOrganigrammaPanel()) {
+            unita.getGraphicUnit().setOrganigrammaPanel(((UnitaOrganizzativa) unita.getParent()).getGraphicUnit().getOrganigrammaPanel());
             organigrammaPanel.add(unita.getGraphicUnit());
         }
     }
@@ -73,7 +68,7 @@ public class ComponenteVisitor implements Visitor {
     // Calcola la larghezza del sotto-albero di un nodo
     private int calculateSubtreeWidth(UnitaOrganizzativa unita) {
         if (unita.getFigli().isEmpty()) {
-            return 100;  // Dimensione minima di un nodo foglia
+            return Math.max(unita.getGraphicUnit().getBounds().width, 100);  // Usa la larghezza del nodo o 100 di default
         }
 
         int totalWidth = 0;
@@ -82,7 +77,7 @@ public class ComponenteVisitor implements Visitor {
                 totalWidth += calculateSubtreeWidth((UnitaOrganizzativa) co) + subtreeSpacing;
             }
         }
-        return totalWidth;
+        return Math.max(totalWidth, unita.getGraphicUnit().getBounds().width);
     }
 
     // Calcola l'offset cumulativo per posizionare un figlio, basato sulla larghezza dei fratelli precedenti
