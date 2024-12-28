@@ -6,6 +6,7 @@ import command.role.AddRoleCommand;
 import command.role.ManageRoleCommand;
 import composite.ComponenteOrganizzativo;
 import composite.Dipendente;
+import composite.Role;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
 
@@ -18,7 +19,7 @@ import java.awt.event.ActionListener;
 public class ManageDipendentiFrame extends JFrame {
     private UnitaOrganizzativa unitaOrganizzativa;
     private OrganigrammaPanel organigrammaPanel;
-
+    private DefaultTableModel model;
     public ManageDipendentiFrame(UnitaOrganizzativa unitaOrganizzativa, OrganigrammaPanel organigrammaPanel) {
         super("Gestione Dipendenti");
         this.unitaOrganizzativa = unitaOrganizzativa;
@@ -35,7 +36,7 @@ public class ManageDipendentiFrame extends JFrame {
         String[] colonne = {"Nome", "Cognome", "Ruolo", "Seleziona"};
 
         // Crea il modello di tabella
-        DefaultTableModel model = new DefaultTableModel(colonne, 0);
+        model = new DefaultTableModel(colonne, 0);
 
         // Aggiungere i dipendenti alla tabella
         for (Dipendente dipendente : unitaOrganizzativa.getDipendentes()) {
@@ -46,7 +47,17 @@ public class ManageDipendentiFrame extends JFrame {
         }
 
         // Creare la tabella con il modello
-        JTable tabella = new JTable(model);
+        JTable tabella = new JTable(model){
+            @Override
+            public Class<?> getColumnClass(int column) {
+                return getValueAt(0, column).getClass();
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 3; // Permetti modifiche solo nella colonna "Seleziona"
+            }
+        };
         tabella.getColumn("Seleziona").setCellEditor(new DefaultCellEditor(new JCheckBox()));
 
         // Creare uno scroll pane per la tabella
@@ -66,8 +77,9 @@ public class ManageDipendentiFrame extends JFrame {
                     boolean isSelected = (boolean) tabella.getValueAt(i, 3); // La colonna 3 è la checkbox
                     if (isSelected) {
                         // Rimuovere il dipendente selezionato
-                        Dipendente dipendente = (Dipendente) unitaOrganizzativa.getFigli().get(i);
-                        unitaOrganizzativa.getFigli().remove(dipendente);
+                        Dipendente dipendente = unitaOrganizzativa.getDipendenteByName(tabella.getValueAt(i, 0).toString());
+                        if(dipendente == null) { return;}
+                        unitaOrganizzativa.removeDipendente(dipendente);
                         model.removeRow(i);
                         organigrammaPanel.setModified(true);
                         i--; // Dopo la rimozione, il prossimo elemento è spostato indietro
@@ -82,8 +94,7 @@ public class ManageDipendentiFrame extends JFrame {
             @Override
             public void execute() {
                 super.execute();
-                setUp();
-
+                refreshTable();
             }
         }));
 
@@ -98,5 +109,14 @@ public class ManageDipendentiFrame extends JFrame {
 
         // Rendi visibile la finestra
         setVisible(true);
+    }
+    private void refreshTable() {
+        model.setRowCount(0); // Svuotare il modello della tabella
+        for (Dipendente dipendente : unitaOrganizzativa.getDipendentes()) {
+
+            Object[] row = {dipendente.getNome(), dipendente.getSurname(), dipendente.getRole(), Boolean.FALSE};
+            model.addRow(row);
+
+        }
     }
 }

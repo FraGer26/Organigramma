@@ -18,6 +18,7 @@ public interface ComponenteOrganizzativo  {
     ComponenteOrganizzativo getParent() ;
     void accept(Visitor visitor);
     void addDipendente(Dipendente dipendente) ;
+    void removeDipendente(Dipendente dipendente) ;
     List<Dipendente> getDipendentes() ;
 
     int getHeight();

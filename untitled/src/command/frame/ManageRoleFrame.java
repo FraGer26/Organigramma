@@ -15,29 +15,37 @@ import java.awt.event.ActionListener;
 public class ManageRoleFrame extends JFrame {
     private UnitaOrganizzativa unitaOrganizzativa;
     private OrganigrammaPanel organigrammaPanel;
+    private DefaultTableModel model;
+
     public ManageRoleFrame(UnitaOrganizzativa unitaOrganizzativa, OrganigrammaPanel organigrammaPanel) {
         super("Gestione Ruoli");
         this.unitaOrganizzativa = unitaOrganizzativa;
         this.organigrammaPanel = organigrammaPanel;
         setUp();
     }
+
     private void setUp() {
         // Definire il nome delle colonne
-        String[] colonne = { "Ruoli","Seleziona"};
+        String[] colonne = {"Ruoli", "Seleziona"};
 
         // Creare un modello di tabella con due colonne: una per la checkbox e una per il nome del ruolo
-        DefaultTableModel model = new DefaultTableModel(colonne, 0);
+        model = new DefaultTableModel(colonne, 0);
 
         // Aggiungere gli elementi della lista alla tabella
         for (Role role : unitaOrganizzativa.getRoles()) {
-            model.addRow(new Object[]{ role,Boolean.FALSE});
+            model.addRow(new Object[]{role, Boolean.FALSE});
         }
 
         // Creare la tabella con il modello
         JTable tabella = new JTable(model) {
-            // Rendere la colonna della checkbox non modificabile
+            @Override
             public Class<?> getColumnClass(int column) {
                 return getValueAt(0, column).getClass();
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 1; // Permetti modifiche solo nella colonna "Seleziona"
             }
         };
         tabella.getColumn("Seleziona").setCellEditor(new DefaultCellEditor(new JCheckBox()));
@@ -45,48 +53,37 @@ public class ManageRoleFrame extends JFrame {
         // Creare uno scroll pane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabella);
 
-        // Creare una finestra per visualizzare la tabella
-
+        // Configurare la finestra
         setSize(500, 400);
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
 
         // Bottone per aggiungere un nuovo ruolo
-
+        JButton addButton = new JButton("Aggiungi Ruoli");
+        addButton.addActionListener(e -> {
+            new AddRoleCommand(unitaOrganizzativa, organigrammaPanel).execute();
+            refreshTable(); // Ricarica la tabella dopo aver aggiunto il ruolo
+        });
 
         // Bottone per rimuovere i ruoli selezionati
         JButton removeButton = new JButton("Rimuovi Ruoli Selezionati");
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ciclo su tutte le righe per rimuovere i ruoli selezionati
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    boolean isSelected = (boolean) tabella.getValueAt(i, 1);
+                for (int i = model.getRowCount() - 1; i >= 0; i--) { // Iterare in ordine inverso per evitare conflitti
+                    boolean isSelected = (boolean) model.getValueAt(i, 1);
                     if (isSelected) {
-                        // Rimuovere il ruolo selezionato
                         Role roleToRemove = (Role) model.getValueAt(i, 0);
                         unitaOrganizzativa.getRoles().remove(roleToRemove);
                         model.removeRow(i);
-                        i--;
-                        repaint();
                     }
                 }
-                // Ricaricare la tabella per riflettere i cambiamenti
-
-                //tabellaFrame.dispose();  // Chiudere la finestra precedente
             }
         });
 
         // Creare un pannello per i bottoni e aggiungerli
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(new CommandJButton("Aggiungi Ruoli",new AddRoleCommand(unitaOrganizzativa,organigrammaPanel){
-            @Override
-            public void execute() {
-                super.execute();
-                setUp();
-
-            }
-        }));
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(addButton);
         buttonPanel.add(removeButton);
 
         // Aggiungere il pannello dei bottoni alla finestra
@@ -94,5 +91,12 @@ public class ManageRoleFrame extends JFrame {
 
         // Impostare la finestra come visibile
         setVisible(true);
+    }
+
+    private void refreshTable() {
+        model.setRowCount(0); // Svuotare il modello della tabella
+        for (Role role : unitaOrganizzativa.getRoles()) {
+            model.addRow(new Object[]{role, Boolean.FALSE});
+        }
     }
 }

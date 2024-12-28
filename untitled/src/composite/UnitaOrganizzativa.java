@@ -55,6 +55,17 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
         figli.add(unita);
 
     }
+    public void removeDipendente(Dipendente dipendente) {
+        Dipendentes.remove(dipendente);
+    }
+    public Dipendente getDipendenteByName(String name) {
+        for (Dipendente dipendente : Dipendentes) {
+            if (dipendente.getNome().equals(name)) {
+                return dipendente;
+            }
+        }
+        return null;
+    }
 
     public void rimuoviFiglio(ComponenteOrganizzativo unita) {
         figli.remove(unita);
