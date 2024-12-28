@@ -4,7 +4,6 @@ package composite;
 
 import visitor.Visitor;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface ComponenteOrganizzativo  {
@@ -19,7 +18,7 @@ public interface ComponenteOrganizzativo  {
     void accept(Visitor visitor);
     void addDipendente(Dipendente dipendente) ;
     void removeDipendente(Dipendente dipendente) ;
-    List<Dipendente> getDipendentes() ;
+    List<Dipendente> getDipendenti() ;
 
     int getHeight();
 }

@@ -7,7 +7,9 @@ import visitor.Visitor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializable {
     @Serial
@@ -18,8 +20,8 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     private List<ComponenteOrganizzativo> figli;
     private GraphicUnit graphicUnit;
     public boolean isRoot=false;
-    private List<Role> Roles=new ArrayList<>();
-    private List<Dipendente> Dipendentes=new ArrayList<>();
+    private Set<Role> Roles=new HashSet<>();
+    private List<Dipendente> Dipendenti=new ArrayList<>();
 
     public UnitaOrganizzativa(String nome, int altezza) {
         this.nome = nome;
@@ -42,7 +44,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return Roles;
     }
 
@@ -56,10 +58,10 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
 
     }
     public void removeDipendente(Dipendente dipendente) {
-        Dipendentes.remove(dipendente);
+        Dipendenti.remove(dipendente);
     }
     public Dipendente getDipendenteByName(String name) {
-        for (Dipendente dipendente : Dipendentes) {
+        for (Dipendente dipendente : Dipendenti) {
             if (dipendente.getNome().equals(name)) {
                 return dipendente;
             }
@@ -87,12 +89,12 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
 
     @Override
     public void addDipendente(Dipendente dipendente) {
-        Dipendentes.add(dipendente);
+        Dipendenti.add(dipendente);
     }
 
     @Override
-    public List<Dipendente> getDipendentes() {
-        return Dipendentes;
+    public List<Dipendente> getDipendenti() {
+        return Dipendenti;
     }
 
 

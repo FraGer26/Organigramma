@@ -4,9 +4,7 @@ import command.CommandJButton;
 import command.dipendenti.AddDipendentiCommand;
 import command.role.AddRoleCommand;
 import command.role.ManageRoleCommand;
-import composite.ComponenteOrganizzativo;
 import composite.Dipendente;
-import composite.Role;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
 
@@ -20,6 +18,7 @@ public class ManageDipendentiFrame extends JFrame {
     private UnitaOrganizzativa unitaOrganizzativa;
     private OrganigrammaPanel organigrammaPanel;
     private DefaultTableModel model;
+    private static final int WIDTH = 600, HEIGHT = 400;
     public ManageDipendentiFrame(UnitaOrganizzativa unitaOrganizzativa, OrganigrammaPanel organigrammaPanel) {
         super("Gestione Dipendenti");
         this.unitaOrganizzativa = unitaOrganizzativa;
@@ -30,7 +29,7 @@ public class ManageDipendentiFrame extends JFrame {
     private void setUp() {
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(600, 400);
+        setSize(WIDTH, HEIGHT);
 
         // Definire le colonne della tabella
         String[] colonne = {"Nome", "Cognome", "Ruolo", "Seleziona"};
@@ -39,7 +38,7 @@ public class ManageDipendentiFrame extends JFrame {
         model = new DefaultTableModel(colonne, 0);
 
         // Aggiungere i dipendenti alla tabella
-        for (Dipendente dipendente : unitaOrganizzativa.getDipendentes()) {
+        for (Dipendente dipendente : unitaOrganizzativa.getDipendenti()) {
 
                 Object[] row = {dipendente.getNome(), dipendente.getSurname(), dipendente.getRole(), Boolean.FALSE};
                 model.addRow(row);
@@ -82,8 +81,6 @@ public class ManageDipendentiFrame extends JFrame {
                         unitaOrganizzativa.removeDipendente(dipendente);
                         model.removeRow(i);
                         organigrammaPanel.setModified(true);
-                        i--; // Dopo la rimozione, il prossimo elemento è spostato indietro
-                        repaint();
                     }
                 }
             }
@@ -112,7 +109,7 @@ public class ManageDipendentiFrame extends JFrame {
     }
     private void refreshTable() {
         model.setRowCount(0); // Svuotare il modello della tabella
-        for (Dipendente dipendente : unitaOrganizzativa.getDipendentes()) {
+        for (Dipendente dipendente : unitaOrganizzativa.getDipendenti()) {
 
             Object[] row = {dipendente.getNome(), dipendente.getSurname(), dipendente.getRole(), Boolean.FALSE};
             model.addRow(row);

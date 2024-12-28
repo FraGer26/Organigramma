@@ -1,7 +1,9 @@
 package command.frame;
 
 import command.CommandJButton;
+import command.dipendenti.AddDipendentiCommand;
 import command.role.AddRoleCommand;
+import command.role.RemoveRoleCommand;
 import composite.Role;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
@@ -57,34 +59,18 @@ public class ManageRoleFrame extends JFrame {
         setSize(500, 400);
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
-
+        JPanel buttonPanel = new JPanel();
         // Bottone per aggiungere un nuovo ruolo
-        JButton addButton = new JButton("Aggiungi Ruoli");
-        addButton.addActionListener(e -> {
-            new AddRoleCommand(unitaOrganizzativa, organigrammaPanel).execute();
-            refreshTable(); // Ricarica la tabella dopo aver aggiunto il ruolo
-        });
 
-        // Bottone per rimuovere i ruoli selezionati
-        JButton removeButton = new JButton("Rimuovi Ruoli Selezionati");
-        removeButton.addActionListener(new ActionListener() {
+        buttonPanel.add(new CommandJButton("Aggiungi Ruoli", new AddRoleCommand(unitaOrganizzativa, organigrammaPanel) {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = model.getRowCount() - 1; i >= 0; i--) { // Iterare in ordine inverso per evitare conflitti
-                    boolean isSelected = (boolean) model.getValueAt(i, 1);
-                    if (isSelected) {
-                        Role roleToRemove = (Role) model.getValueAt(i, 0);
-                        unitaOrganizzativa.getRoles().remove(roleToRemove);
-                        model.removeRow(i);
-                    }
-                }
+            public void execute() {
+                super.execute();
+                refreshTable();
             }
-        });
+        }));
+        buttonPanel.add(new CommandJButton("Rimuovi Ruoli Selezionati",new RemoveRoleCommand(unitaOrganizzativa,organigrammaPanel,model)));
 
-        // Creare un pannello per i bottoni e aggiungerli
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        buttonPanel.add(addButton);
-        buttonPanel.add(removeButton);
 
         // Aggiungere il pannello dei bottoni alla finestra
         add(buttonPanel, BorderLayout.SOUTH);
