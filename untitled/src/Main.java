@@ -2,7 +2,9 @@
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaFrame;
 import view.OrganigrammaPanel;
-
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
 import javax.swing.*;
 
 public class Main {
@@ -11,3 +13,5 @@ public class Main {
 
     }
 }
+
+

@@ -19,7 +19,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     private GraphicUnit graphicUnit;
     public boolean isRoot=false;
     private List<Role> Roles=new ArrayList<>();
-
+    private List<Dipendente> Dipendentes=new ArrayList<>();
 
     public UnitaOrganizzativa(String nome, int altezza) {
         this.nome = nome;
@@ -73,10 +73,24 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }
+
+    @Override
+    public void addDipendente(Dipendente dipendente) {
+        Dipendentes.add(dipendente);
+    }
+
+    @Override
+    public List<Dipendente> getDipendentes() {
+        return Dipendentes;
+    }
+
+
+
     public String toString()   {
         return getNome() ;
     }
     public int getHeight() {
         return altezza;
     }
+
 }

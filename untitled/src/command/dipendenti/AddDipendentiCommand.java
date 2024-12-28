@@ -69,8 +69,8 @@ public class AddDipendentiCommand  implements Command {
                     }
                 }
                 // Aggiungere il nuovo dipendente
-                Dipendente nuovoDipendente = new Dipendente(unitaOrganizzativa, nome, cognome, ruolo);
-                unitaOrganizzativa.aggiungiFiglio(nuovoDipendente); // Aggiungere il nuovo dipendente
+                Dipendente nuovoDipendente = new Dipendente( nome, cognome, ruolo);
+                unitaOrganizzativa.addDipendente(nuovoDipendente); // Aggiungere il nuovo dipendente
                 organigrammaPanel.setModified(true);
 
             }

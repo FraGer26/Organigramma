@@ -38,12 +38,11 @@ public class ManageDipendentiFrame extends JFrame {
         DefaultTableModel model = new DefaultTableModel(colonne, 0);
 
         // Aggiungere i dipendenti alla tabella
-        for (ComponenteOrganizzativo componenteOrganizzativo : unitaOrganizzativa.getFigli()) {
-            if (componenteOrganizzativo.isDipendente()) {
-                Dipendente dipendente = (Dipendente) componenteOrganizzativo;
+        for (Dipendente dipendente : unitaOrganizzativa.getDipendentes()) {
+
                 Object[] row = {dipendente.getNome(), dipendente.getSurname(), dipendente.getRole(), Boolean.FALSE};
                 model.addRow(row);
-            }
+
         }
 
         // Creare la tabella con il modello

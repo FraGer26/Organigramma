@@ -17,24 +17,27 @@ public class RemoveUnitCommand implements Command {
     @Override
     public void execute() {
 
-            if(unitaOrganizzativa.isRoot) throw new RuntimeException("RootNotRemovableEception");
-            else {
-                unitaOrganizzativa.getParent().rimuoviFiglio(unitaOrganizzativa);
-                if(!unitaOrganizzativa.isLeaf()) {
-                    Object[] options = {"OK", "ANNULLA"};
-                    int risposta = JOptionPane.showOptionDialog(null,
-                            "Attenzione, il nodo selezionato ha dei figli, continuare con la rimozione?", "Rimozione nodo",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                            null, options, options[1]);
-                   if(risposta == JOptionPane.OK_OPTION)
+        if(unitaOrganizzativa.isRoot) throw new RuntimeException("RootNotRemovableEception");
+
+
+        if(!unitaOrganizzativa.isLeaf()) {
+            if(showDialog()== JOptionPane.OK_OPTION)
                     unitaOrganizzativa.accept(new RemoveChildrenVisitor(organigrammaPanel));
-                }
+            else return;
+        }
+        unitaOrganizzativa.getParent().rimuoviFiglio(unitaOrganizzativa);
+        organigrammaPanel.remove(unitaOrganizzativa.getGraphicUnit());
+        organigrammaPanel.setModified(true);
 
-                organigrammaPanel.remove(unitaOrganizzativa.getGraphicUnit());
-                organigrammaPanel.setModified(true);
+        organigrammaPanel.repaint();
+        organigrammaPanel.revalidate();
 
-                organigrammaPanel.repaint();
-                organigrammaPanel.revalidate();
-            }
+    }
+    private int showDialog() {
+        Object[] options = {"OK", "ANNULLA"};
+        return JOptionPane.showOptionDialog(null,
+                "Attenzione, il nodo selezionato ha dei figli, continuare con la rimozione?", "Rimozione nodo",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                null, options, options[1]);
     }
 }

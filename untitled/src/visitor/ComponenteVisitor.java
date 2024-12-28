@@ -29,7 +29,7 @@ public class ComponenteVisitor implements Visitor {
             if(unita.isLeaf()) width++;
             height = Math.max(unita.getHeight(), height);
             // Calcolo la posizione del nodo
-            if (unita.isLeaf()) {
+            if (unita.isLeaf() ) {
                 // Se è una foglia, assegno una posizione orizzontale basata su xLeaf
                 unita.getGraphicUnit().setBounds(xLeaf, getY(unita), unita.getGraphicUnit().getBounds().width, unita.getGraphicUnit().getBounds().height);
                 xLeaf += unita.getGraphicUnit().getBounds().width + 10; // Aumento xLeaf per il prossimo nodo foglia
@@ -37,7 +37,8 @@ public class ComponenteVisitor implements Visitor {
                 // Se non è una foglia, calcolo la posizione in base ai figli
                 if (unita.getFigli().size() == 1) {
                     // Se ha un solo figlio, la sua posizione sarà la stessa del figlio
-                    int xChild = ((UnitaOrganizzativa)unita.getFigli().get(0)).getGraphicUnit().getBounds().x;
+
+                    int xChild = ((UnitaOrganizzativa)unita.getFigli().getFirst()).getGraphicUnit().getBounds().x;
 
                     unita.getGraphicUnit().setBounds(xChild, getY(unita), unita.getGraphicUnit().getBounds().width, unita.getGraphicUnit().getBounds().height);
                 } else {
@@ -67,12 +68,12 @@ public class ComponenteVisitor implements Visitor {
 
     // Calcola la posizione X media tra il primo e l'ultimo figlio
     private int getXParent(UnitaOrganizzativa unita) {
-        if(unita instanceof UnitaOrganizzativa) {
-            int xFirst = ((UnitaOrganizzativa) unita.getFigli().get(0)).getGraphicUnit().getBounds().x;
-            int xLast = ((UnitaOrganizzativa) unita.getFigli().get(unita.getFigli().size() - 1)).getGraphicUnit().getBounds().x;
+
+            int xFirst = ((UnitaOrganizzativa) unita.getFigli().getFirst()).getGraphicUnit().getBounds().x;
+            int xLast = ((UnitaOrganizzativa) unita.getFigli().getLast()).getGraphicUnit().getBounds().x;
             return xFirst + (xLast - xFirst) / 2;
-        }
-        return 0;
+
+
     }
 
     // Calcola la posizione Y di un nodo in base alla sua profondità

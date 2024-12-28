@@ -47,9 +47,9 @@ public class ManageRoleFrame extends JFrame {
 
         // Creare una finestra per visualizzare la tabella
 
-       setSize(500, 400);
-       setLayout(new BorderLayout());
-       add(scrollPane, BorderLayout.CENTER);
+        setSize(500, 400);
+        setLayout(new BorderLayout());
+        add(scrollPane, BorderLayout.CENTER);
 
         // Bottone per aggiungere un nuovo ruolo
 
@@ -67,7 +67,6 @@ public class ManageRoleFrame extends JFrame {
                         Role roleToRemove = (Role) model.getValueAt(i, 0);
                         unitaOrganizzativa.getRoles().remove(roleToRemove);
                         model.removeRow(i);
-                        organigrammaPanel.setModified(true);
                         i--;
                         repaint();
                     }
@@ -91,9 +90,9 @@ public class ManageRoleFrame extends JFrame {
         buttonPanel.add(removeButton);
 
         // Aggiungere il pannello dei bottoni alla finestra
-       add(buttonPanel, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         // Impostare la finestra come visibile
-       setVisible(true);
+        setVisible(true);
     }
 }
