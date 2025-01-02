@@ -1,7 +1,6 @@
 package command.frame;
 
 import command.CommandJButton;
-import command.dipendenti.AddDipendentiCommand;
 import command.role.AddRoleCommand;
 import command.role.RemoveRoleCommand;
 import composite.Role;
@@ -11,8 +10,6 @@ import view.OrganigrammaPanel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ManageRoleFrame extends JFrame {
     private UnitaOrganizzativa unitaOrganizzativa;
@@ -28,14 +25,14 @@ public class ManageRoleFrame extends JFrame {
 
     private void setUp() {
         // Definire il nome delle colonne
-        String[] colonne = {"Ruoli", "Seleziona"};
+        String[] colonne = {"Ruoli", "Seleziona","Ruolo delle sopraunita"};
 
         // Creare un modello di tabella con due colonne: una per la checkbox e una per il nome del ruolo
         model = new DefaultTableModel(colonne, 0);
 
         // Aggiungere gli elementi della lista alla tabella
         for (Role role : unitaOrganizzativa.getRoles()) {
-            model.addRow(new Object[]{role, Boolean.FALSE});
+            model.addRow(new Object[]{role, Boolean.FALSE,role.extend()});
         }
 
         // Creare la tabella con il modello
@@ -44,13 +41,13 @@ public class ManageRoleFrame extends JFrame {
             public Class<?> getColumnClass(int column) {
                 return getValueAt(0, column).getClass();
             }
-
-            @Override
             public boolean isCellEditable(int row, int column) {
                 return column == 1; // Permetti modifiche solo nella colonna "Seleziona"
             }
+
         };
         tabella.getColumn("Seleziona").setCellEditor(new DefaultCellEditor(new JCheckBox()));
+        tabella.getColumn("Ruolo delle sopraunita").setCellEditor(new DefaultCellEditor(new JCheckBox()));
 
         // Creare uno scroll pane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabella);
@@ -69,8 +66,8 @@ public class ManageRoleFrame extends JFrame {
                 refreshTable();
             }
         }));
-        buttonPanel.add(new CommandJButton("Rimuovi Ruoli Selezionati",new RemoveRoleCommand(unitaOrganizzativa,organigrammaPanel,model)));
 
+        buttonPanel.add(new CommandJButton("Rimuovi Ruoli Selezionati",new RemoveRoleCommand(unitaOrganizzativa,organigrammaPanel,model)));
 
         // Aggiungere il pannello dei bottoni alla finestra
         add(buttonPanel, BorderLayout.SOUTH);
@@ -82,7 +79,7 @@ public class ManageRoleFrame extends JFrame {
     private void refreshTable() {
         model.setRowCount(0); // Svuotare il modello della tabella
         for (Role role : unitaOrganizzativa.getRoles()) {
-            model.addRow(new Object[]{role, Boolean.FALSE});
+            model.addRow(new Object[]{role, Boolean.FALSE,Boolean.FALSE});
         }
     }
 }

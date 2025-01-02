@@ -1,7 +1,9 @@
 package command.unit;
 
 import command.Command;
+import composite.Dipendente;
 import composite.GraphicUnit;
+import composite.Role;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
 
@@ -30,7 +32,6 @@ public class NewUnitCommand implements Command {
             figlio.setGraphicUnit(graphicUnitFiglio);
             unitaOrganizzativa.aggiungiFiglio(figlio);
             organigrammaPanel.add(graphicUnitFiglio);
-         //   unitaOrganizzativa.getFigli().forEach(s->{ System.out.println("Nome Padre:"+unitaOrganizzativa.getNome()+"Lista figli:"+s.getNome());});
             organigrammaPanel.setModified(true);
             System.out.println(unitaOrganizzativa.getFigli());
 
@@ -41,4 +42,5 @@ public class NewUnitCommand implements Command {
         }
 
     }
+
 }

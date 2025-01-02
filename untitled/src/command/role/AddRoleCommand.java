@@ -17,11 +17,33 @@ public class AddRoleCommand implements Command {
     @Override
     public void execute() {
         String nameRole = JOptionPane.showInputDialog("Inserisci il nome della nuova unità:");
+
         if (nameRole != null && !nameRole.isEmpty()) {
-            unitaOrganizzativa.getRoles().add(new Role(nameRole,true));
+            unitaOrganizzativa.getRoles().add(nameDialog(nameRole));
             organigrammaPanel.setModified(true);
             organigrammaPanel.repaint();
 
         }
     }
+
+
+    private Role nameDialog(String nameRole) {
+
+        // Creazione di un JCheckBox
+        JCheckBox checkBox = new JCheckBox("Aggiungi il ruolo alle sotto unita");
+
+        // Creazione di un JPanel per contenere la checkbox
+        JPanel panel = new JPanel();
+        panel.add(checkBox);
+
+        // Mostra una finestra di dialogo con la checkbox
+        int option = JOptionPane.showConfirmDialog(null, panel,
+                "Eredita Ruolo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+        // Controlla il risultato e se la checkbox è selezionata
+
+        return new Role(nameRole,checkBox.isSelected());
+    }
 }
+
+

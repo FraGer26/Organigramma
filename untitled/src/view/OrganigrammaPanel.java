@@ -9,6 +9,7 @@ import composite.UnitaOrganizzativa;
 import composite.Role;
 import visitor.ComponenteVisitor;
 import visitor.DrawLineVisitor;
+import visitor.ExtendRoleVisitor;
 
 
 import javax.swing.*;
@@ -51,6 +52,8 @@ public class OrganigrammaPanel extends JPanel {
         root.accept(visitor);
         DrawLineVisitor lineVisitor = new DrawLineVisitor(g);
         root.accept(lineVisitor);
+        ExtendRoleVisitor roleVisitor=new ExtendRoleVisitor();
+        root.accept(roleVisitor);
 
         setPreferredSize(new Dimension(
                 GraphicUnit.HORIZONTAL_OFFSET + GraphicUnit.WIDTH*2 + (GraphicUnit.WIDTH+ GraphicUnit.HORIZONTAL_SPACE)* visitor.getWidth(),
