@@ -2,8 +2,10 @@ package command.frame;
 
 import command.CommandJButton;
 import command.dipendenti.AddDipendentiCommand;
+import command.dipendenti.RemoveDipendentiCommand;
 import command.role.AddRoleCommand;
 import command.role.ManageRoleCommand;
+import command.role.RemoveRoleCommand;
 import composite.Dipendente;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
@@ -65,26 +67,7 @@ public class ManageDipendentiFrame extends JFrame {
         // Creare i pulsanti per le azioni di aggiunta e rimozione
         JPanel buttonPanel = new JPanel();
         // JButton aggiungiButton = new JButton("Aggiungi Utente");
-        JButton rimuoviButton = new JButton("Rimuovi Utente");
 
-        // Aggiungere l'azione al pulsante "Rimuovi Utente"
-        rimuoviButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Rimuovere gli utenti selezionati
-                for (int i = 0; i < tabella.getRowCount(); i++) {
-                    boolean isSelected = (boolean) tabella.getValueAt(i, 3); // La colonna 3 è la checkbox
-                    if (isSelected) {
-                        // Rimuovere il dipendente selezionato
-                        Dipendente dipendente = unitaOrganizzativa.getDipendenteByName(tabella.getValueAt(i, 0).toString());
-                        if(dipendente == null) { return;}
-                        unitaOrganizzativa.removeDipendente(dipendente);
-                        model.removeRow(i);
-                        organigrammaPanel.setModified(true);
-                    }
-                }
-            }
-        });
 
         // Aggiungere il pulsante "Aggiungi dipendenti" con il comando personalizzato
         buttonPanel.add(new CommandJButton("Aggiungi dipendenti", new AddDipendentiCommand(unitaOrganizzativa, organigrammaPanel) {
@@ -96,7 +79,7 @@ public class ManageDipendentiFrame extends JFrame {
         }));
 
         // Aggiungere il pulsante per rimuovere utenti, aggiungere ruolo, e visualizzare ruoli
-        buttonPanel.add(rimuoviButton);
+        buttonPanel.add(new CommandJButton("Rimuovi Dipendente",new RemoveDipendentiCommand(unitaOrganizzativa,organigrammaPanel,model)));
         buttonPanel.add(new CommandJButton("Aggiungi ruolo", new AddRoleCommand(unitaOrganizzativa, organigrammaPanel)));
         buttonPanel.add(new CommandJButton("Visualizza ruoli", new ManageRoleCommand(unitaOrganizzativa, organigrammaPanel)));
 

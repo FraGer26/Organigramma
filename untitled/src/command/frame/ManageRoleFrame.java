@@ -25,14 +25,14 @@ public class ManageRoleFrame extends JFrame {
 
     private void setUp() {
         // Definire il nome delle colonne
-        String[] colonne = {"Ruoli", "Seleziona","Ruolo delle sopraunita"};
+        String[] colonne = {"Ruoli", "Seleziona","Ruolo delle sovraunita","Ruolo da estendere\n alle sotto unita"};
 
         // Creare un modello di tabella con due colonne: una per la checkbox e una per il nome del ruolo
         model = new DefaultTableModel(colonne, 0);
 
         // Aggiungere gli elementi della lista alla tabella
         for (Role role : unitaOrganizzativa.getRoles()) {
-            model.addRow(new Object[]{role, Boolean.FALSE,role.extend()});
+            model.addRow(new Object[]{role, Boolean.FALSE,verificaExtend(role),role.extend()});
         }
 
         // Creare la tabella con il modello
@@ -47,8 +47,8 @@ public class ManageRoleFrame extends JFrame {
 
         };
         tabella.getColumn("Seleziona").setCellEditor(new DefaultCellEditor(new JCheckBox()));
-        tabella.getColumn("Ruolo delle sopraunita").setCellEditor(new DefaultCellEditor(new JCheckBox()));
-
+        tabella.getColumn("Ruolo delle sovraunita").setCellEditor(new DefaultCellEditor(new JCheckBox()));
+        tabella.getColumn("Ruolo da estendere\n alle sotto unita").setCellEditor(new DefaultCellEditor(new JCheckBox()));
         // Creare uno scroll pane per la tabella
         JScrollPane scrollPane = new JScrollPane(tabella);
 
@@ -57,7 +57,6 @@ public class ManageRoleFrame extends JFrame {
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel();
-        // Bottone per aggiungere un nuovo ruolo
 
         buttonPanel.add(new CommandJButton("Aggiungi Ruoli", new AddRoleCommand(unitaOrganizzativa, organigrammaPanel) {
             @Override
@@ -79,7 +78,13 @@ public class ManageRoleFrame extends JFrame {
     private void refreshTable() {
         model.setRowCount(0); // Svuotare il modello della tabella
         for (Role role : unitaOrganizzativa.getRoles()) {
-            model.addRow(new Object[]{role, Boolean.FALSE,Boolean.FALSE});
+            model.addRow(new Object[]{role, Boolean.FALSE,verificaExtend(role),role.extend()});
         }
+    }
+    private boolean verificaExtend(Role role) {
+        if(unitaOrganizzativa.isRoot){
+           return false;
+        }
+       return ((UnitaOrganizzativa) unitaOrganizzativa.getParent()).getRoles().contains(role);
     }
 }

@@ -9,9 +9,7 @@ import view.OrganigrammaPanel;
 import javax.swing.*;
 
 public class RemoveChildrenVisitor implements Visitor {
-    /**
-     * Rimuove tutti gli oggetti <code>GraphicNode</code> dei nodi figli del node su cui si invoca la accept() dal panel.
-     */
+
     private final OrganigrammaPanel organigrammaPanel;
     public RemoveChildrenVisitor(OrganigrammaPanel organigrammaPanel) {
         this.organigrammaPanel = organigrammaPanel;

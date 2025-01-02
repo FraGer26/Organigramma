@@ -23,18 +23,13 @@ public class RemoveDipendentiCommand implements Command {
 
     @Override
     public void execute() {
-        // Rimuovere gli utenti selezionati
-        for (int i = 0; i < model.getRowCount(); i++) {
-            boolean isSelected = (boolean) model.getValueAt(i, 3); // La colonna 3 è la checkbox
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            boolean isSelected = (boolean) model.getValueAt(i, 3);
             if (isSelected) {
-                // Rimuovere il dipendente selezionato
-                Dipendente dipendente = unitaOrganizzativa.getDipendenteByName(model.getValueAt(i, 0).toString());
-                if(dipendente == null) { return;}
-                unitaOrganizzativa.removeDipendente(dipendente);
+                unitaOrganizzativa.removeDipendente(unitaOrganizzativa.getDipendenteByNameAndSurnameAndRole
+                        ((String) model.getValueAt(i, 0),(String) model.getValueAt(i, 1)));
                 model.removeRow(i);
                 organigrammaPanel.setModified(true);
-                i--; // Dopo la rimozione, il prossimo elemento è spostato indietro
-
             }
         }
     }

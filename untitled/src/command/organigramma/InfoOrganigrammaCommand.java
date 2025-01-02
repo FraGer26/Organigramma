@@ -6,9 +6,11 @@ import view.OrganigrammaPanel;
 
 import javax.swing.*;
 
+import static composite.GraphicUnit.CHARACTER_LIMIT;
+
 public class InfoOrganigrammaCommand implements Command {
     private OrganigrammaFrame organigrammaFrame;
-    private int WIDTH=500, HEIGHT=200;
+    private int WIDTH=600, HEIGHT=200;
     public InfoOrganigrammaCommand(OrganigrammaFrame organigrammaFrame) {
         this.organigrammaFrame = organigrammaFrame;
 
@@ -27,18 +29,14 @@ public class InfoOrganigrammaCommand implements Command {
         tab1.add(new JLabel("<html><h3>Generale</h3>" +
                 "<p>L'applicazione permette di gestire un organigramma aziendale. " +
                 "<br>Non c'è un limite in altezza o larghezza per l'organigramma." +
-                "<br>I nodi devono avere un nome con un numero di caratteri minore di "+"-----"+".</p></html>"));
+                "<br>Le unità organizzative devono avere un nome con un numero di caratteri minore di "+CHARACTER_LIMIT+".</p></html>"));
         tabbedPane.addTab("Generale", tab1);
 
         JPanel tab2 = new JPanel();
         tab2.add(new JLabel(
-                "<html>" +
-                        "<h3>Scorciatoie</h3>" +
-                        "<ol>"+
-                        "<li><b>Doppio click</b>, permette di aggiungere un<br> nodo figlio al nodo cliccato.</li>" +
-                        "<li><b>Tasto centrale del mouse</b>, permette di rinominare<br> il nodo selezionato.</li>" +
-                        "</ol>"+
-                        "</html>"));
+                "<html><h3>Uso</h3>" +
+                        "<p>click sia destro che sinistro. " +
+                        "<br> su una unità permette di aggiungere un<br> una untà figlio all'unità selezionata."));
         tabbedPane.addTab("Scorciatoie", tab2);
 
         JPanel tab3 = new JPanel();

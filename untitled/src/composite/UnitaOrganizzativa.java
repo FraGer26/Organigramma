@@ -60,9 +60,9 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     public void removeDipendente(Dipendente dipendente) {
         Dipendenti.remove(dipendente);
     }
-    public Dipendente getDipendenteByName(String name) {
+    public Dipendente getDipendenteByNameAndSurnameAndRole(String name,String surname) {
         for (Dipendente dipendente : Dipendenti) {
-            if (dipendente.getNome().equals(name)) {
+            if (dipendente.getNome().equals(name) && dipendente.getSurname().equals(surname) ) {
                 return dipendente;
             }
         }
