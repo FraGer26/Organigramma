@@ -24,7 +24,8 @@ public class NewUnitCommand implements Command {
     public void execute() {
 
         String nomeFiglio = JOptionPane.showInputDialog("Inserisci il nome della nuova unità:");
-        if(nomeFiglio.length()>CHARACTER_LIMIT){
+        if(nomeFiglio == null){return;}
+        else if(nomeFiglio.length()>CHARACTER_LIMIT){
             JOptionPane.showMessageDialog(null,
                     "La lunghezza dei caratteri supera quella consentita",  // Messaggio di errore
                     "Errore lunghezza",                                           // Titolo della finestra
@@ -38,9 +39,9 @@ public class NewUnitCommand implements Command {
             return;
         }
 
-        int altezzaPadre= unitaOrganizzativa.getHeight();
-        UnitaOrganizzativa figlio = new UnitaOrganizzativa(nomeFiglio,altezzaPadre+1);
-        GraphicUnit graphicUnitFiglio =new GraphicUnit(figlio,organigrammaPanel);
+        int altezzaPadre = unitaOrganizzativa.getHeight();
+        UnitaOrganizzativa figlio = new UnitaOrganizzativa(nomeFiglio, altezzaPadre + 1);
+        GraphicUnit graphicUnitFiglio = new GraphicUnit(figlio, organigrammaPanel);
         graphicUnitFiglio.setVisible(true);
 
         figlio.setGraphicUnit(graphicUnitFiglio);
@@ -50,6 +51,7 @@ public class NewUnitCommand implements Command {
 
         organigrammaPanel.repaint();
         organigrammaPanel.revalidate();
+
 
 
 
