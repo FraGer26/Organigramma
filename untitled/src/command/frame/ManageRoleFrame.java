@@ -42,7 +42,7 @@ public class ManageRoleFrame extends JFrame {
                 return getValueAt(0, column).getClass();
             }
             public boolean isCellEditable(int row, int column) {
-                return column == 1; // Permetti modifiche solo nella colonna "Seleziona"
+                return column == 1 ; // Permetti modifiche solo nella colonna "Seleziona"
             }
 
         };
@@ -82,9 +82,8 @@ public class ManageRoleFrame extends JFrame {
         }
     }
     private boolean verificaExtend(Role role) {
-        if(unitaOrganizzativa.isRoot){
+        if(unitaOrganizzativa.isRoot)
            return false;
-        }
        return ((UnitaOrganizzativa) unitaOrganizzativa.getParent()).getRoles().contains(role);
     }
 }

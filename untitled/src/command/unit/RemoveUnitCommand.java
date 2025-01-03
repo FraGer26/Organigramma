@@ -2,6 +2,7 @@ package command.unit;
 
 import command.Command;
 import composite.UnitaOrganizzativa;
+import exceptions.RootNotRemovableException;
 import view.OrganigrammaPanel;
 import visitor.RemoveChildrenVisitor;
 
@@ -17,7 +18,7 @@ public class RemoveUnitCommand implements Command {
     @Override
     public void execute() {
 
-        if(unitaOrganizzativa.isRoot) throw new RuntimeException("RootNotRemovableEception");
+        if(unitaOrganizzativa.isRoot) throw new RootNotRemovableException("la radice non puo essere rimossa");
 
 
         if(!unitaOrganizzativa.isLeaf()) {
