@@ -68,7 +68,6 @@ public class ManageDipendentiFrame extends JFrame {
         JPanel buttonPanel = new JPanel();
         // JButton aggiungiButton = new JButton("Aggiungi Utente");
 
-
         // Aggiungere il pulsante "Aggiungi dipendenti" con il comando personalizzato
         buttonPanel.add(new CommandJButton("Aggiungi dipendenti", new AddDipendentiCommand(unitaOrganizzativa, organigrammaPanel) {
             @Override
@@ -77,7 +76,6 @@ public class ManageDipendentiFrame extends JFrame {
                 refreshTable();
             }
         }));
-
         // Aggiungere il pulsante per rimuovere utenti, aggiungere ruolo, e visualizzare ruoli
         buttonPanel.add(new CommandJButton("Rimuovi Dipendente",new RemoveDipendentiCommand(unitaOrganizzativa,organigrammaPanel,model)));
         buttonPanel.add(new CommandJButton("Aggiungi ruolo", new AddRoleCommand(unitaOrganizzativa, organigrammaPanel)));

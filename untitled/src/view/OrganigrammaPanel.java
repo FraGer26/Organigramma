@@ -2,20 +2,15 @@
 package view;
 
 
-import composite.ComponenteOrganizzativo;
-import composite.Dipendente;
 import composite.GraphicUnit;
 import composite.UnitaOrganizzativa;
-import composite.Role;
-import visitor.ComponenteVisitor;
-import visitor.DrawLineVisitor;
-import visitor.ExtendRoleVisitor;
+import visitor.draw.ComponenteVisitor;
+import visitor.draw.DrawLineVisitor;
+import visitor.management.ExtendRoleVisitor;
 
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.Map;
 
 public class OrganigrammaPanel extends JPanel {
     public UnitaOrganizzativa root;
@@ -23,6 +18,7 @@ public class OrganigrammaPanel extends JPanel {
     public OrganigrammaPanel() {
       initRootNode();
     }
+
     public void initRootNode(){
         int altezza=0;
         root = new UnitaOrganizzativa("Nuova Unita",altezza);
@@ -46,7 +42,7 @@ public class OrganigrammaPanel extends JPanel {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         ComponenteVisitor visitor=new ComponenteVisitor(this);
         root.accept(visitor);

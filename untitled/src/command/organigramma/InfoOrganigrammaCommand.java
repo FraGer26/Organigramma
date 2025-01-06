@@ -17,7 +17,7 @@ public class InfoOrganigrammaCommand implements Command {
     }
     @Override
     public void execute() {
-        JDialog infoDialog = new JDialog(organigrammaFrame, "Informazioni di Aiuto", true);
+        JDialog infoDialog = new JDialog(organigrammaFrame, "Informazioni", true);
 
         infoDialog.setSize(WIDTH, HEIGHT);
         infoDialog.setLocationRelativeTo(null);
@@ -37,7 +37,7 @@ public class InfoOrganigrammaCommand implements Command {
                 "<html><h3>Uso</h3>" +
                         "<p>click sia destro che sinistro. " +
                         "<br> su una unità permette di aggiungere un<br> una untà figlio all'unità selezionata."));
-        tabbedPane.addTab("Scorciatoie", tab2);
+        tabbedPane.addTab("Comandi", tab2);
 
         JPanel tab3 = new JPanel();
         tab3.add(new JLabel("<html><h3>About</h3><p>Creato da Francesco Gervino.</p></html>"));

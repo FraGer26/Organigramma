@@ -1,6 +1,7 @@
 package command.unit;
 
 import command.Command;
+import composite.GraphicUnit;
 import composite.Role;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
@@ -18,12 +19,17 @@ public class RenameUnitCommand implements Command {
     }
     @Override
     public void execute() {
-        String nameRole = JOptionPane.showInputDialog("Inserisci il nome della nuova unità:");
-        if (nameRole != null && !nameRole.isEmpty()) {
-            unitaOrganizzativa.setNome(nameRole);
-            organigrammaPanel.setModified(true);
-            organigrammaPanel.repaint();
-            organigrammaPanel.revalidate();
+        String nameUnit = JOptionPane.showInputDialog("Inserisci il nome della nuova unità:");
+        if (nameUnit != null && !nameUnit.isEmpty()) {
+            if(nameUnit.length()<= GraphicUnit.CHARACTER_LIMIT) {
+                unitaOrganizzativa.setNome(nameUnit);
+                organigrammaPanel.setModified(true);
+                organigrammaPanel.repaint();
+                organigrammaPanel.revalidate();
+            }else{
+                JOptionPane.showMessageDialog(null, "La nome inserito è troppo lungo,\nlunghezza massima: "+GraphicUnit.CHARACTER_LIMIT+" caratteri."
+                        , "Inserisci nome", JOptionPane.ERROR_MESSAGE);
+            }
 
         }
 

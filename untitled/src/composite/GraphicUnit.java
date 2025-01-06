@@ -18,7 +18,7 @@ public class GraphicUnit  extends JComponent {
     private  Rectangle bounds;
     public static final int
             HEIGHT = 66, WIDTH = (int) (HEIGHT*2.5),
-            CHARACTER_LIMIT = 27,
+            CHARACTER_LIMIT = 20,
             VERTICAL_SPACE = HEIGHT, VERTICAL_OFFSET = 20,//Spazio e offset lasciato tra un nodo e un altro in verticale
             HORIZONTAL_SPACE = WIDTH/3, HORIZONTAL_OFFSET = 20;//Spazio e offset lasciato tra un nodo e un altro in orizzontale
 

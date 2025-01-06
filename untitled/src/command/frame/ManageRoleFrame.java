@@ -42,7 +42,7 @@ public class ManageRoleFrame extends JFrame {
                 return getValueAt(0, column).getClass();
             }
             public boolean isCellEditable(int row, int column) {
-                return column == 1 ; // Permetti modifiche solo nella colonna "Seleziona"
+                return column == 1 && model.getValueAt(row,2).equals(Boolean.FALSE); // Permetti modifiche solo nella colonna "Seleziona"
             }
 
         };

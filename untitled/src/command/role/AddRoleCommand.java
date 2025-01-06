@@ -19,7 +19,7 @@ public class AddRoleCommand implements Command {
         String nameRole = JOptionPane.showInputDialog("Inserisci il nome della nuova unità:");
 
         if (nameRole != null && !nameRole.isEmpty()) {
-            unitaOrganizzativa.getRoles().add(nameDialog(nameRole));
+            unitaOrganizzativa.addRole(nameDialog(nameRole));
             organigrammaPanel.setModified(true);
             organigrammaPanel.repaint();
 
@@ -37,7 +37,7 @@ public class AddRoleCommand implements Command {
         panel.add(checkBox);
 
         // Mostra una finestra di dialogo con la checkbox
-        int option = JOptionPane.showConfirmDialog(null, panel,
+        JOptionPane.showConfirmDialog(null, panel,
                 "Eredita Ruolo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
         // Controlla il risultato e se la checkbox è selezionata

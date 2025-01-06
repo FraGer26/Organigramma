@@ -27,15 +27,11 @@ public class OrganigrammaFrame extends JFrame {
     private void initFrame() {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setTitle("Organigramma Aziendale");
-
-
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 new CloseOrganigrammaCommand(organigrammaPanel).execute();
             }
         });
-
-
         setSize(WIDTH, HEIGHT);
         setVisible(true);
 
@@ -52,10 +48,6 @@ public class OrganigrammaFrame extends JFrame {
 
         return panel;
     }
-
-
-
-
     private void initMenu() {
         JMenuBar menuBar = new JMenuBar();
 

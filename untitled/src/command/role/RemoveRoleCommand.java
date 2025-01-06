@@ -1,10 +1,10 @@
 package command.role;
 
 import command.Command;
-import command.frame.ManageRoleFrame;
 import composite.Role;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
+import visitor.management.RemoverExtendRoleVisitor;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +27,10 @@ public class RemoveRoleCommand implements Command {
             if (isSelected) {
                 Role roleToRemove = (Role) model.getValueAt(i, 0);
                 unitaOrganizzativa.getRoles().remove(roleToRemove);
+                if(roleToRemove.extend()) {
+                    RemoverExtendRoleVisitor visitor = new RemoverExtendRoleVisitor(roleToRemove);
+                    visitor.visit(unitaOrganizzativa);
+                }
                 model.removeRow(i);
                 organigrammaPanel.setModified(true);
             }

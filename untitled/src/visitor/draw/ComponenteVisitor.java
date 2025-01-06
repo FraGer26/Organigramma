@@ -1,12 +1,9 @@
-package visitor;
+package visitor.draw;
 
 import composite.ComponenteOrganizzativo;
-import composite.Dipendente;
-import composite.GraphicUnit;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
-
-import java.util.ArrayList;
+import visitor.Visitor;
 
 import static composite.GraphicUnit.*;
 
@@ -14,18 +11,14 @@ public class ComponenteVisitor implements Visitor {
 
     private int height, width;  // Altezza e larghezza complessiva dell'organigramma
     private int xLeaf = HORIZONTAL_OFFSET;    // Offset orizzontale iniziale per la posizione dei nodi foglia
-
     private OrganigrammaPanel organigrammaPanel;
-
     public ComponenteVisitor(OrganigrammaPanel organigrammaPanel) {
         this.organigrammaPanel = organigrammaPanel;
     }
 
     @Override
     public void visit(UnitaOrganizzativa unita) {
-
             loadUpdate(unita);
-
             if(unita.isLeaf()) width++;
             height = Math.max(unita.getHeight(), height);
             // Calcolo la posizione del nodo
@@ -47,8 +40,6 @@ public class ComponenteVisitor implements Visitor {
                     unita.getGraphicUnit().setBounds(xParent, getY(unita), unita.getGraphicUnit().getBounds().width, unita.getGraphicUnit().getBounds().height);
                 }
             }
-
-
         // Visita ricorsivamente i figli
         for (ComponenteOrganizzativo co : unita.getFigli()) {
             if (co instanceof UnitaOrganizzativa) {

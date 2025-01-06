@@ -1,12 +1,10 @@
-package visitor;
+package visitor.management;
 
 import composite.ComponenteOrganizzativo;
 import composite.UnitaOrganizzativa;
 
 import view.OrganigrammaPanel;
-
-
-import javax.swing.*;
+import visitor.Visitor;
 
 public class RemoveChildrenVisitor implements Visitor {
 

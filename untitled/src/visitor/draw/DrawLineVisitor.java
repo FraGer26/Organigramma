@@ -1,8 +1,8 @@
-package visitor;
+package visitor.draw;
 
 import composite.ComponenteOrganizzativo;
-import composite.Dipendente;
 import composite.UnitaOrganizzativa;
+import visitor.Visitor;
 
 import java.awt.*;
 import java.util.List;

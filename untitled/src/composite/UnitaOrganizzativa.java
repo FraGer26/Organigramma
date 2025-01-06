@@ -17,16 +17,15 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     private String nome;
     private final int altezza;
     private ComponenteOrganizzativo parent;
-    private List<ComponenteOrganizzativo> figli;
+    private List<ComponenteOrganizzativo> figli=new ArrayList<>();
     private GraphicUnit graphicUnit;
     public boolean isRoot=false;
-    private Set<Role> Roles=new HashSet<>();
+    private List<Role> Roles=new ArrayList<>();
     private List<Dipendente> Dipendenti=new ArrayList<>();
 
     public UnitaOrganizzativa(String nome, int altezza) {
         this.nome = nome;
         this.altezza = altezza;
-        this.figli = new ArrayList<>();
     }
 
     public GraphicUnit getGraphicUnit() {
@@ -36,7 +35,6 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
         this.graphicUnit = graphicUnit;
     }
 
-
     public boolean isLeaf() {return figli.isEmpty();}
     public String getNome() {
         return nome;
@@ -44,8 +42,11 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return Roles;
+    }
+    public boolean addRole(Role role) {
+        return Roles.add(role);
     }
 
     public List<ComponenteOrganizzativo> getFigli() {
