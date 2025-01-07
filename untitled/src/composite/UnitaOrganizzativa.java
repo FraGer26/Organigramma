@@ -7,9 +7,7 @@ import visitor.Visitor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializable {
     @Serial
@@ -19,7 +17,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     private ComponenteOrganizzativo parent;
     private List<ComponenteOrganizzativo> figli=new ArrayList<>();
     private GraphicUnit graphicUnit;
-    public boolean isRoot=false;
+    private boolean isRoot=false;
     private List<Role> Roles=new ArrayList<>();
     private List<Dipendente> Dipendenti=new ArrayList<>();
 
@@ -36,6 +34,21 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     }
 
     public boolean isLeaf() {return figli.isEmpty();}
+
+    @Override
+    public boolean isRoot() {
+        return isRoot;
+    }
+
+    @Override
+    public void removeRole(Role role) {
+        Roles.remove(role);
+    }
+
+    public void setRoot() {
+        isRoot = true;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -45,15 +58,15 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     public List<Role> getRoles() {
         return Roles;
     }
-    public boolean addRole(Role role) {
-        return Roles.add(role);
+    public void addRole(Role role) {
+        Roles.add(role);
     }
 
     public List<ComponenteOrganizzativo> getFigli() {
         return figli;
     }
 
-    public void aggiungiFiglio(ComponenteOrganizzativo unita) {
+    public void addFiglio(ComponenteOrganizzativo unita) {
         unita.setParent(this);
         figli.add(unita);
 
@@ -70,7 +83,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
         return null;
     }
 
-    public void rimuoviFiglio(ComponenteOrganizzativo unita) {
+    public void removeFiglio(ComponenteOrganizzativo unita) {
         figli.remove(unita);
     }
 
@@ -81,9 +94,7 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     public ComponenteOrganizzativo getParent() {
         return parent;
     }
-    public boolean isDipendente() {
-        return false;
-    }
+
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }
@@ -97,8 +108,6 @@ public class UnitaOrganizzativa  implements ComponenteOrganizzativo, Serializabl
     public List<Dipendente> getDipendenti() {
         return Dipendenti;
     }
-
-
 
     public String toString()   {
         return getNome() ;

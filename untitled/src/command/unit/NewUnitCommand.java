@@ -1,9 +1,7 @@
 package command.unit;
 
 import command.Command;
-import composite.Dipendente;
 import composite.GraphicUnit;
-import composite.Role;
 import composite.UnitaOrganizzativa;
 import view.OrganigrammaPanel;
 
@@ -31,7 +29,7 @@ public class NewUnitCommand implements Command {
                     "Errore lunghezza",                                           // Titolo della finestra
                     JOptionPane.ERROR_MESSAGE);                          // Tipo di messaggio
             return;
-        } else if (nomeFiglio.length()<=0) {
+        } else if (nomeFiglio.isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "non puoi creare una unita con un nome vuoto",  // Messaggio di errore
                     "Errore lunghezza",                                           // Titolo della finestra
@@ -45,12 +43,13 @@ public class NewUnitCommand implements Command {
         graphicUnitFiglio.setVisible(true);
 
         figlio.setGraphicUnit(graphicUnitFiglio);
-        unitaOrganizzativa.aggiungiFiglio(figlio);
+        unitaOrganizzativa.addFiglio(figlio);
         organigrammaPanel.add(graphicUnitFiglio);
         organigrammaPanel.setModified(true);
 
         organigrammaPanel.repaint();
         organigrammaPanel.revalidate();
+
 
 
 

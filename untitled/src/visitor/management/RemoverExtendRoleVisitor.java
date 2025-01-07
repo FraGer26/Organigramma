@@ -13,8 +13,7 @@ public class RemoverExtendRoleVisitor implements Visitor {
     @Override
     public void visit(UnitaOrganizzativa unita) {
         for(ComponenteOrganizzativo child : unita.getFigli())
-            if(child instanceof UnitaOrganizzativa)
                 child.accept(this);
-        unita.getRoles().remove(role);
+        unita.removeRole(role);
     }
 }

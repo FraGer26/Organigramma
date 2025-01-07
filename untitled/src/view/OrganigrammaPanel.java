@@ -13,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class OrganigrammaPanel extends JPanel {
-    public UnitaOrganizzativa root;
+    private UnitaOrganizzativa root;
     private boolean modified = false;
     public OrganigrammaPanel() {
       initRootNode();
@@ -22,7 +22,7 @@ public class OrganigrammaPanel extends JPanel {
     public void initRootNode(){
         int altezza=0;
         root = new UnitaOrganizzativa("Nuova Unita",altezza);
-        root.isRoot=true;
+        root.setRoot();
         setLayout(null);
         GraphicUnit gu=new GraphicUnit(root,this);
         root.setGraphicUnit(gu);
@@ -46,10 +46,10 @@ public class OrganigrammaPanel extends JPanel {
         super.paintComponent(g);
         ComponenteVisitor visitor=new ComponenteVisitor(this);
         root.accept(visitor);
-        DrawLineVisitor lineVisitor = new DrawLineVisitor(g);
-        root.accept(lineVisitor);
         ExtendRoleVisitor roleVisitor=new ExtendRoleVisitor();
         root.accept(roleVisitor);
+        DrawLineVisitor lineVisitor = new DrawLineVisitor(g);
+        root.accept(lineVisitor);
 
         setPreferredSize(new Dimension(
                 GraphicUnit.HORIZONTAL_OFFSET + GraphicUnit.WIDTH*2 + (GraphicUnit.WIDTH+ GraphicUnit.HORIZONTAL_SPACE)* visitor.getWidth(),

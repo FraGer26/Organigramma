@@ -66,7 +66,6 @@ public class ManageDipendentiFrame extends JFrame {
 
         // Creare i pulsanti per le azioni di aggiunta e rimozione
         JPanel buttonPanel = new JPanel();
-        // JButton aggiungiButton = new JButton("Aggiungi Utente");
 
         // Aggiungere il pulsante "Aggiungi dipendenti" con il comando personalizzato
         buttonPanel.add(new CommandJButton("Aggiungi dipendenti", new AddDipendentiCommand(unitaOrganizzativa, organigrammaPanel) {
@@ -91,7 +90,6 @@ public class ManageDipendentiFrame extends JFrame {
     private void refreshTable() {
         model.setRowCount(0); // Svuotare il modello della tabella
         for (Dipendente dipendente : unitaOrganizzativa.getDipendenti()) {
-
             Object[] row = {dipendente.getNome(), dipendente.getSurname(), dipendente.getRole(), Boolean.FALSE};
             model.addRow(row);
 

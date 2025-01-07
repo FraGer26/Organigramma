@@ -15,9 +15,7 @@ public class RemoveChildrenVisitor implements Visitor {
 
     @Override
     public void visit(UnitaOrganizzativa node) {
-
         for(ComponenteOrganizzativo child : node.getFigli())
-            if(child instanceof UnitaOrganizzativa)
              child.accept(this);
         organigrammaPanel.remove(node.getGraphicUnit());
     }

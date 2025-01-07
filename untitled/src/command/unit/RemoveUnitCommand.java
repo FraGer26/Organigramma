@@ -18,13 +18,13 @@ public class RemoveUnitCommand implements Command {
     @Override
     public void execute() {
         try {
-            if(unitaOrganizzativa.isRoot) throw new RootNotRemovableException("la radice non puo essere rimossa");
+            if(unitaOrganizzativa.isRoot()) throw new RootNotRemovableException("la radice non puo essere rimossa");
             if(!unitaOrganizzativa.isLeaf()) {
                 if(showDialog()== JOptionPane.OK_OPTION)
                     unitaOrganizzativa.accept(new RemoveChildrenVisitor(organigrammaPanel));
                 else return;
             }
-            unitaOrganizzativa.getParent().rimuoviFiglio(unitaOrganizzativa);
+            unitaOrganizzativa.getParent().removeFiglio(unitaOrganizzativa);
             organigrammaPanel.remove(unitaOrganizzativa.getGraphicUnit());
             organigrammaPanel.setModified(true);
             organigrammaPanel.repaint();

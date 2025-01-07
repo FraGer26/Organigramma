@@ -21,9 +21,9 @@ public class CloseOrganigrammaCommand implements Command {
             System.exit(0);
         }else if (res==JOptionPane.NO_OPTION){
             System.exit(0);
-        }else{
-
         }
+        return;
+
     }
 
 }

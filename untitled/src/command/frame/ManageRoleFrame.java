@@ -82,7 +82,7 @@ public class ManageRoleFrame extends JFrame {
         }
     }
     private boolean verificaExtend(Role role) {
-        if(unitaOrganizzativa.isRoot)
+        if(unitaOrganizzativa.isRoot())
            return false;
        return ((UnitaOrganizzativa) unitaOrganizzativa.getParent()).getRoles().contains(role);
     }
