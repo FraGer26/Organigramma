@@ -9,7 +9,7 @@ import static composite.GraphicUnit.*;
 
 public class ComponenteVisitor implements Visitor {
 
-    private int height, width;  // Altezza e larghezza complessiva dell'organigramma
+    private int height, width;
     private int xLeaf = HORIZONTAL_OFFSET;    // Offset orizzontale iniziale per la posizione dei nodi foglia
     private final OrganigrammaPanel organigrammaPanel;
     public ComponenteVisitor(OrganigrammaPanel organigrammaPanel) {
