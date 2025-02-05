@@ -35,7 +35,7 @@ public class ComponenteVisitor implements Visitor {
                 // Se non è una foglia, calcolo la posizione in base ai figli
             if (unita.getFigli().size() == 1) {
                     // Se ha un solo figlio, la sua posizione sarà la stessa del figlio
-                int xChild = ((UnitaOrganizzativa)unita.getFigli().getFirst()).getGraphicUnit().getBounds().x;
+                int xChild = ((UnitaOrganizzativa)unita.getFigli().get(0)).getGraphicUnit().getBounds().x;
 
                     unita.getGraphicUnit().setBounds(xChild, getY(unita), unita.getGraphicUnit().getBounds().width, unita.getGraphicUnit().getBounds().height);
             } else {
@@ -60,8 +60,8 @@ public class ComponenteVisitor implements Visitor {
     // Calcola la posizione X media tra il primo e l'ultimo figlio
     private int getXParent(UnitaOrganizzativa unita) {
 
-            int xFirst = ((UnitaOrganizzativa) unita.getFigli().getFirst()).getGraphicUnit().getBounds().x;
-            int xLast = ((UnitaOrganizzativa) unita.getFigli().getLast()).getGraphicUnit().getBounds().x;
+            int xFirst = ((UnitaOrganizzativa) unita.getFigli().get(0)).getGraphicUnit().getBounds().x;
+            int xLast = ((UnitaOrganizzativa) unita.getFigli().get(unita.getFigli().size()-1)).getGraphicUnit().getBounds().x;
             return xFirst + (xLast - xFirst) / 2;
 
 
