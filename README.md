@@ -1,1 +1,1 @@
-Per eseguire basta eseguire il metodo main nella classe Main
+Per eseguire basta eseguire il metodo main nella classe src/Main
